@@ -41,6 +41,8 @@ const BlockGraph = () => {
     fetch(`https://api.github.com/users/${githubUsername}/events`)
       .then(response => response.json())
       .then(events => {
+        console.log(events); // Debug: Check the fetched events
+
         const now = new Date();
         const month = now.getMonth();
         const year = now.getFullYear();
@@ -59,6 +61,8 @@ const BlockGraph = () => {
           }
         });
 
+        console.log(activityCounts); // Debug: Check the computed activity counts
+
         const blockWidth = (width - 40) / 31;
         const blockHeight = 20;
 
@@ -68,7 +72,7 @@ const BlockGraph = () => {
           .selectAll("rect")
           .data(activityCounts.flatMap((counts, level) => 
             counts.map((count, day) => ({
-              color: getColorForActivityLevel(level),
+              color: count > 0 ? getColorForActivityLevel(level) : colors.noActivity, // Set color based on activity
               x: day * blockWidth,
               y: height - (level + 1) * blockHeight,
               width: blockWidth,
