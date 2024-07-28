@@ -2,7 +2,7 @@
 layout: ../../layouts/LayoutBlogPost.astro
 title: "Hello, World"
 description: "My first Post"
-pubDate: 2023-01-21
+pubDate: 2024-07-28
 category: "intro"
 ---
 
