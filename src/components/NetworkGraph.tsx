@@ -142,9 +142,10 @@ const NetworkGraph = () => {
       .catch(error => console.error('Error fetching GitHub repos:', error));
 
     // Block Graph
-    const blockGraphWidth = width * 0.9; // Adjust the width to fit within the screen
-    const blockGraphHeight = 80; // Reduced height for a smaller graph
+    const blockGraphWidth = width * 0.8; // Adjusted width to fit within the screen
+    const blockGraphHeight = 150; // Adjusted height for visibility
     const daysInMonth = 30;
+    const blocksPerRow = 5;
 
     const blockSvg = d3
       .select(blockGraphContainer)
@@ -172,17 +173,17 @@ const NetworkGraph = () => {
           }
         });
 
-        const blockWidth = blockGraphWidth / daysInMonth;
-        const blockHeight = blockGraphHeight;
+        const blockWidth = blockGraphWidth / (daysInMonth / blocksPerRow);
+        const blockHeight = blockGraphHeight / blocksPerRow;
 
         blockSvg.selectAll("rect")
           .data(activityData)
           .enter()
           .append("rect")
-          .attr("x", (d, i) => i * blockWidth)
-          .attr("y", 0)
-          .attr("width", blockWidth)
-          .attr("height", blockHeight)
+          .attr("x", (d, i) => (i % (daysInMonth / blocksPerRow)) * blockWidth)
+          .attr("y", (d, i) => Math.floor(i / (daysInMonth / blocksPerRow)) * blockHeight)
+          .attr("width", blockWidth - 1) // Adjust to fit within the grid
+          .attr("height", blockHeight - 1)
           .attr("fill", d => colorScale(d))
           .attr("stroke", "#000")
           .attr("stroke-width", 0.5)
@@ -197,33 +198,26 @@ const NetworkGraph = () => {
               .attr("stroke-width", 0.5);
           });
 
-        // Add a legend
-        const legend = blockSvg.append("g")
-          .attr("transform", `translate(${blockGraphWidth - 120}, 10)`);
+        // Add labels for days and months
+        const dayLabels = blockSvg.append("g")
+          .attr("class", "day-labels");
 
-        const legendWidth = 20;
-        const legendHeight = 60;
-
-        legend.selectAll("rect")
-          .data([0, 10, 20])
-          .enter()
-          .append("rect")
-          .attr("x", 0)
-          .attr("y", (d, i) => i * (legendHeight / 3))
-          .attr("width", legendWidth)
-          .attr("height", legendHeight / 3)
-          .attr("fill", d => colorScale(d))
-          .attr("stroke", "#000");
-
-        legend.selectAll("text")
-          .data([0, 10, 20])
+        dayLabels.selectAll("text")
+          .data(Array.from({ length: blocksPerRow }, (_, i) => i + 1))
           .enter()
           .append("text")
-          .attr("x", legendWidth + 5)
-          .attr("y", (d, i) => i * (legendHeight / 3) + (legendHeight / 6))
-          .text(d => `${d}`)
-          .attr("fill", "#fff")
-          .style("font-size", "12px");
+          .attr("x", (d, i) => i * blockWidth + blockWidth / 2)
+          .attr("y", blockGraphHeight - 5)
+          .text(d => `Day ${d}`)
+          .attr("text-anchor", "middle")
+          .attr("fill", colors.label);
+
+        const monthLabel = blockSvg.append("text")
+          .attr("x", blockGraphWidth / 2)
+          .attr("y", blockGraphHeight - 20)
+          .attr("text-anchor", "middle")
+          .text("Month")
+          .attr("fill", colors.label);
       })
       .catch(error => console.error('Error fetching GitHub events:', error));
   });
@@ -235,9 +229,9 @@ const NetworkGraph = () => {
         <div
           class="relative"
           style={{
-            width: '90%', // Adjust the width to center the graph and leave space on the sides
+            width: '80%', // Adjust width to fit the centered block graph
             margin: '0 auto',
-            height: '80px', // Adjust the height as needed
+            height: '150px', // Adjust height as needed
           }}
           ref={blockGraphContainer}
         ></div>
