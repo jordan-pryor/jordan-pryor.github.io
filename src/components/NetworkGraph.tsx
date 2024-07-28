@@ -219,7 +219,7 @@ const NetworkGraph = () => {
           .attr("text-anchor", "middle")
           .text("Month")
           .attr("fill", colors.label");
-      })
+          })
       .catch(error => console.error('Error fetching GitHub events:', error));
   });
 
