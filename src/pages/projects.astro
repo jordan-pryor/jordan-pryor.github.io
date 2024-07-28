@@ -1,5 +1,6 @@
 ---
 import NetworkGraph from "../components/NetworkGraph";
+import BlockGraph from "../components/BlockGraph"; // Import BlockGraph component
 import BasicLayout from "../layouts/BasicLayout.astro";
 ---
 
@@ -29,4 +30,6 @@ import BasicLayout from "../layouts/BasicLayout.astro";
   >
 
   <NetworkGraph client:load />
+
+  <BlockGraph client:load /> <!-- Add BlockGraph component here -->
 </BasicLayout>
