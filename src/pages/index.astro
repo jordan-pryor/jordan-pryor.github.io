@@ -7,6 +7,7 @@ import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
 import Globe from "../components/Globe";
+import NetworkGraph from './NetworkGraph'; // Ensure this import points to your NetworkGraph component
 ---
 
 <script>
@@ -51,7 +52,7 @@ import Globe from "../components/Globe";
       colorText="text-neutral-900"
     >
       <div class="h-full w-full absolute inset-0 -z-10">
-        <Globe client:load />
+        <NetworkGraph client:load />
       </div>
     </Card>
     <Card
