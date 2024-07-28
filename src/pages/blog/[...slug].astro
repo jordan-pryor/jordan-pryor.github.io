@@ -1,4 +1,3 @@
----
 import { getCollection } from "astro:content";
 
 export const prerender = true;
@@ -72,7 +71,7 @@ const { Content } = await entry.render();
   }
 
   a {
-    color: #1a0dab;
+    color: #7dc4e4; /* Sapphire */
     text-decoration: none;
   }
 
@@ -89,13 +88,13 @@ const { Content } = await entry.render();
   blockquote {
     margin: 20px 0;
     padding-left: 15px;
-    border-left: 5px solid #ccc;
+    border-left: 5px solid #b8c0e0; /* Subtext1 */
   }
 
   pre,
   code {
     font-family: "Courier New", monospace;
-    background-color: #f4f4f4;
+    background-color: #363a4f; /* Surface0 */
     border-radius: 5px;
   }
 
@@ -107,7 +106,7 @@ const { Content } = await entry.render();
   code {
     padding: 2px 4px;
     font-size: 90%;
-    color: #d63384;
+    color: #f5bde6; /* Pink */
   }
 
   img {
@@ -124,6 +123,6 @@ const { Content } = await entry.render();
   td {
     text-align: left;
     padding: 8px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #a5adcb; /* Subtext0 */
   }
 </style>
