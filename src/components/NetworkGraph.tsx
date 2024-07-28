@@ -15,68 +15,67 @@ const colors = {
 };
 
 const NetworkGraph = () => {
-  let timelineContainer: HTMLDivElement | undefined;
+  let spiderWebContainer: HTMLDivElement | undefined;
   const [repos, setRepos] = createSignal([]);
 
-  const drawTimeline = () => {
-    if (!timelineContainer) return;
+  const drawSpiderWeb = () => {
+    if (!spiderWebContainer) return;
 
-    const width = 150;
-    const height = timelineContainer.clientHeight;
-    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    const width = 500;
+    const height = 500;
+    const radius = Math.min(width, height) / 2 - 20;
 
     const svg = d3
-      .select(timelineContainer)
+      .select(spiderWebContainer)
       .append("svg")
       .attr("width", width)
       .attr("height", height)
-      .style("background-color", colors.background);
+      .style("background-color", colors.background)
+      .append("g")
+      .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
     // Fetch GitHub user activity
     fetch(`https://api.github.com/users/${githubUsername}/events`)
       .then(response => response.json())
       .then(events => {
-        const activityData = events.map(event => ({
-          type: event.type,
-          repo: event.repo.name,
-          date: new Date(event.created_at)
-        }));
+        const activityTypes = Array.from(new Set(events.map(event => event.type)));
+        const angleSlice = (Math.PI * 2) / activityTypes.length;
 
-        const x = d3.scaleTime()
-          .domain(d3.extent(activityData, d => d.date))
-          .range([margin.left, width - margin.right]);
+        const radialScale = d3.scaleLinear()
+          .domain([0, d3.max(events, d => new Date(d.created_at).getTime())])
+          .range([0, radius]);
 
-        const y = d3.scaleBand()
-          .domain(activityData.map(d => d.type))
-          .range([margin.top, height - margin.bottom])
-          .padding(0.1);
-
-        const xAxis = g => g
-          .attr("transform", `translate(0,${height - margin.bottom})`)
-          .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
-
-        const yAxis = g => g
-          .attr("transform", `translate(${margin.left},0)`)
-          .call(d3.axisLeft(y))
-          .call(g => g.select(".domain").remove());
-
-        svg.append("g")
-          .selectAll("rect")
-          .data(activityData)
+        const axis = svg.append("g").selectAll(".axis")
+          .data(activityTypes)
           .enter()
-          .append("rect")
-          .attr("x", d => x(d.date))
-          .attr("y", d => y(d.type))
-          .attr("width", 10)
-          .attr("height", y.bandwidth())
-          .attr("fill", colors.nodeFill)
-          .attr("opacity", 0)
-          .transition()
-          .duration(750)
-          .attr("opacity", 1);
+          .append("g")
+          .attr("class", "axis");
 
-        svg.append("g").call(xAxis);
-        svg.append("g").call(yAxis);
+        axis.append("line")
+          .attr("x1", 0)
+          .attr("y1", 0)
+          .attr("x2", d => radialScale(new Date(events.find(e => e.type === d).created_at).getTime()))
+          .attr("y2", 0)
+          .attr("stroke", colors.nodeStroke);
+
+        axis.append("text")
+          .attr("x", d => radialScale(new Date(events.find(e => e.type === d).created_at).getTime()) + 5)
+          .attr("y", 0)
+          .attr("dy", "-0.3em")
+          .attr("fill", colors.label)
+          .text(d => d);
+
+        svg.selectAll(".activity")
+          .data(events)
+          .enter()
+          .append("circle")
+          .attr("r", 4)
+          .attr("cx", d => radialScale(new Date(d.created_at).getTime()) * Math.cos(angleSlice * activityTypes.indexOf(d.type)))
+          .attr("cy", d => radialScale(new Date(d.created_at).getTime()) * Math.sin(angleSlice * activityTypes.indexOf(d.type)))
+          .attr("fill", colors.nodeFill)
+          .on("click", (event, d) => {
+            window.open(d.repo.url, "_blank");
+          });
       })
       .catch(error => console.error('Error fetching GitHub activity:', error));
   };
@@ -92,20 +91,20 @@ const NetworkGraph = () => {
   };
 
   onMount(() => {
-    drawTimeline();
+    drawSpiderWeb();
     fetchRepos();
 
     // Redraw the graph on window resize
     window.addEventListener("resize", () => {
-      d3.select(timelineContainer).select("svg").remove();
-      drawTimeline();
+      d3.select(spiderWebContainer).select("svg").remove();
+      drawSpiderWeb();
     });
   });
 
   return (
     <div class="flex flex-row text-white justify-center items-center w-full h-full">
-      <div class="w-1/5 h-full" ref={el => (timelineContainer = el)}></div>
-      <div class="w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <div class="w-1/4 h-full" ref={el => (spiderWebContainer = el)}></div>
+      <div class="w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
         {repos().map(repo => (
           <div class="bg-darkslate-500 p-4 rounded-lg shadow-lg">
             <a href={repo.html_url} target="_blank" class="text-xl font-bold text-white hover:underline">
