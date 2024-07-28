@@ -1,5 +1,5 @@
 ---
-import Globe from "../components/Globe";
+import NetworkGraph from "../components/NetworkGraph";
 import BasicLayout from "../layouts/BasicLayout.astro";
 ---
 
@@ -18,10 +18,9 @@ import BasicLayout from "../layouts/BasicLayout.astro";
 </script>
 
 <BasicLayout
-  title="Gianmarco Cavallo - Visited Countries"
-  description="A 3d globe showing countries that I have visited so far"
-  page="travel"
-
+  title="Jordan Pryor - Current Projects"
+  description="A network graph showing current projects"
+  page="projects"
 >
   <a
     href="/"
@@ -29,5 +28,5 @@ import BasicLayout from "../layouts/BasicLayout.astro";
     >Back</a
   >
 
-  <Globe client:load />
+  <NetworkGraph client:load />
 </BasicLayout>
