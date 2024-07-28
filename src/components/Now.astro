@@ -3,15 +3,29 @@ import Card from "./Card/index.astro";
 import Pulse from "./Pulse.astro";
 ---
 
+<style>
+  .card-title {
+    color: #b8c0e0; /* Subtext1 */
+  }
+
+  .card-subtitle {
+    color: #8087a2; /* Overlay1 */
+  }
+
+  .card-text {
+    color: #cad3f5; /* Text */
+  }
+</style>
+
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-2">
   <div class="flex justify-between w-full items-start mb-2">
     <div class="flex flex-col">
-      <h2>Now</h2>
+      <h2 class="card-title">Now</h2>
       <a href="https://sive.rs/nowff" target="_blank">
-        <span class="text-xs text-gray-500 cursor-pointer">what's that ?</span>
+        <span class="card-subtitle text-xs cursor-pointer">what's that ?</span>
       </a>
     </div>
     <Pulse />
   </div>
-  <p class="text-xs">Currently working as freelancer</p>
+  <p class="card-text text-xs">Currently working as freelancer</p>
 </Card>

@@ -2,15 +2,29 @@
 import Card from "./Card/index.astro";
 ---
 
-<Card colSpan="md:col-span-1" rowSpan="md:row-span-6" title="About me">
-  <div class="flex flex-col gap-2">
+<style>
+  .about-me-text {
+    color: #cad3f5; /* Text */
+  }
+
+  .about-me-list {
+    color: #a5adcb; /* Subtext0 */
+  }
+
+  .about-me-title {
+    color: #f5bde6; /* Pink */
+  }
+</style>
+
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-6" title="About me" class="about-me-title">
+  <div class="flex flex-col gap-2 about-me-text">
     <div class="text-sm font-light">
       <p>
         Hello! My Name is Jordan, I am A Software Developer; Enrolled Full-Time at Full Sail.
         <br />
         My current Skillset includes:
       </p>
-      <ul class="list-disc list-inside">
+      <ul class="list-disc list-inside about-me-list">
         <li>Java</li>
         <li>Lua</li>
         <li>C++</li>
@@ -25,8 +39,9 @@ import Card from "./Card/index.astro";
       interesting pieces of a time that imo is long gone.
     </p>
     <p class="text-sm font-light">
-      While I have my current skillset, I always am willing to learn to achive what every my Task or Goal maybe. My goal is to find the right
+      While I have my current skillset, I always am willing to learn to achieve whatever my task or goal may be. My goal is to find the right
       solution for each project or product I work on.
     </p>
   </div>
 </Card>
+

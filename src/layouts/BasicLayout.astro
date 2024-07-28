@@ -112,7 +112,7 @@ const schema =
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body
-    class="bg-darkslate-700 md:h-screen flex flex-col justify-center items-center"
+    class="bg-[#1e2030] md:h-screen flex flex-col justify-center items-center" <!-- Mantle -->
   >
     <slot name="loader" />
     <slot />
@@ -141,6 +141,7 @@ const schema =
     margin: 0;
     font-family: "Satoshi", sans-serif;
     -webkit-font-smoothing: antialiased;
+    color: #cad3f5; /* Text */
   }
 
   h1,
@@ -150,9 +151,11 @@ const schema =
   h5,
   h6 {
     font-family: "Cabinet Grotesk", sans-serif;
+    color: #b7bdf8; /* Lavender */
   }
   p {
     font-family: "Satoshi";
+    color: #a5adcb; /* Subtext0 */
   }
 
   b {

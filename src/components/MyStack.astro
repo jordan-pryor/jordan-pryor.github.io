@@ -2,12 +2,22 @@
 import Card from "./Card/index.astro";
 ---
 
+<style>
+  .card-text {
+    color: #b8c0e0; /* Subtext1 */
+  }
+
+  .list-item {
+    color: #cad3f5; /* Text */
+  }
+</style>
+
 <Card colSpan="md:col-span-2" rowSpan="md:row-span-1" title="My Stack">
-  <p class="text-sm font-light">
+  <p class="card-text text-sm font-light">
     Here's a snapshot of the primary Languages I work with:
   </p>
-  <ul class="text-sm font-light pl-5 list-disc">
-    <li ><strong>Java</strong></li>
+  <ul class="list-item text-sm font-light pl-5 list-disc">
+    <li><strong>Java</strong></li>
     <li><strong>C++</strong></li>
     <li><strong>GDScript</strong></li>
     <li><strong>Lua</strong></li>

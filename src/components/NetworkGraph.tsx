@@ -4,6 +4,15 @@ import * as d3 from "d3";
 // Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
 const githubUsername = "jordan-pryor";
 
+// Color palette
+const colors = {
+  nodeFill: "#ed8796", // Red
+  nodeStroke: "#c6a0f6", // Mauve
+  link: "#8bd5ca", // Teal
+  label: "#cad3f5", // Text
+  background: "#24273a" // Base
+};
+
 const NetworkGraph = () => {
   let graphContainer: HTMLDivElement | undefined;
 
@@ -17,13 +26,14 @@ const NetworkGraph = () => {
       .select(graphContainer)
       .append("svg")
       .attr("width", width)
-      .attr("height", height);
+      .attr("height", height)
+      .style("background-color", colors.background);
 
     // Fetch GitHub repositories
     fetch(`https://api.github.com/users/${githubUsername}/repos`)
       .then(response => response.json())
       .then(repos => {
-        const nodes = repos.map(repo => ({ id: repo.name }));
+        const nodes = repos.map(repo => ({ id: repo.name, url: repo.html_url }));
         const links = nodes.map((node, index) => ({
           source: index === 0 ? nodes[0].id : nodes[Math.floor(Math.random() * index)].id,
           target: node.id
@@ -40,7 +50,7 @@ const NetworkGraph = () => {
           .data(links)
           .enter()
           .append("line")
-          .attr("stroke", "#999")
+          .attr("stroke", colors.link)
           .attr("stroke-width", 2);
 
         const node = svg.append("g")
@@ -50,7 +60,12 @@ const NetworkGraph = () => {
           .enter()
           .append("circle")
           .attr("r", 10)
-          .attr("fill", "#E63946")
+          .attr("fill", colors.nodeFill)
+          .attr("stroke", colors.nodeStroke)
+          .attr("stroke-width", 1.5)
+          .on("click", (event, d) => {
+            window.open(d.url, "_blank");
+          })
           .call(d3.drag()
             .on("start", (event, d) => {
               if (!event.active) simulation.alphaTarget(0.3).restart();
@@ -77,7 +92,7 @@ const NetworkGraph = () => {
           .attr("dy", -3)
           .attr("dx", 12)
           .text(d => d.id)
-          .attr("fill", "#fff");
+          .attr("fill", colors.label);
 
         simulation.on("tick", () => {
           link
