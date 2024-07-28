@@ -218,7 +218,7 @@ const NetworkGraph = () => {
           .attr("y", blockGraphHeight + 40)
           .attr("text-anchor", "middle")
           .text("Month")
-          .attr("fill", colors.label");
+          .attr("fill", colors.label);
           })
       .catch(error => console.error('Error fetching GitHub events:', error));
   });
