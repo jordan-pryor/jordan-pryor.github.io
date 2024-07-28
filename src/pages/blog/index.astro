@@ -1,3 +1,4 @@
+---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import PostRow from "../../components/Blog/PostRow.astro";
@@ -20,17 +21,17 @@ const posts = (await getCollection("blog"))?.sort(
 
 <Layout
   title="Jordan Pryor - Blog"
-  description="Indie developer with strong passion for user experience, Game Development, Engine Development & Occasionally Web Development"
+  description="Indie developer with a passion for Video Games"
 >
   <main
-    class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8 bg-base text-text"
+    class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8"
   >
     <a
       href="/"
-      class="text-text bg-surface0 hover:bg-surface1 px-4 py-2 mb-8 border border-solid border-overlay1 rounded-lg"
+      class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
       >Back</a
     >
-    <h1 class="text-4xl font-bold mb-4 text-text">Posts</h1>
+    <h1 class="text-4xl font-bold mb-4 text-neutral-100">Posts</h1>
     <ul class="w-full">
       {
         posts?.map((post) => (
@@ -44,4 +45,3 @@ const posts = (await getCollection("blog"))?.sort(
     </ul>
   </main>
 </Layout>
-
