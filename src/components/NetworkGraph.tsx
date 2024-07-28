@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 // Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
 const githubUsername = "jordan-pryor";
-const githubOrg = "fifthcirclestudios"; // Replace with your organization name
+const githubOrg = "example-org"; // Replace with your organization name
 
 // Color palette
 const colors = {
@@ -14,7 +14,8 @@ const colors = {
   background: "#24273a", // Base
   activityLow: "#a6da95", // Green
   activityMedium: "#eed49f", // Yellow
-  activityHigh: "#f5a97f" // Peach
+  activityHigh: "#f5a97f", // Peach
+  noActivity: "#24273a" // Match the background color
 };
 
 const NetworkGraph = () => {
@@ -184,7 +185,7 @@ const NetworkGraph = () => {
           .attr("y", (d, i) => Math.floor(i / (daysInMonth / blocksPerRow)) * blockHeight)
           .attr("width", blockWidth - 1) // Adjust to fit within the grid
           .attr("height", blockHeight - 1)
-          .attr("fill", d => colorScale(d))
+          .attr("fill", d => d === 0 ? colors.noActivity : colorScale(d))
           .attr("stroke", "#000")
           .attr("stroke-width", 0.5)
           .on("mouseover", (event, d) => {
@@ -207,17 +208,17 @@ const NetworkGraph = () => {
           .enter()
           .append("text")
           .attr("x", (d, i) => i * blockWidth + blockWidth / 2)
-          .attr("y", blockGraphHeight - 5)
+          .attr("y", blockGraphHeight + 20)
           .text(d => `Day ${d}`)
           .attr("text-anchor", "middle")
           .attr("fill", colors.label);
 
         const monthLabel = blockSvg.append("text")
           .attr("x", blockGraphWidth / 2)
-          .attr("y", blockGraphHeight - 20)
+          .attr("y", blockGraphHeight + 40)
           .attr("text-anchor", "middle")
           .text("Month")
-          .attr("fill", colors.label);
+          .attr("fill", colors.label");
       })
       .catch(error => console.error('Error fetching GitHub events:', error));
   });
@@ -229,9 +230,10 @@ const NetworkGraph = () => {
         <div
           class="relative"
           style={{
-            width: '80%', // Adjust width to fit the centered block graph
+            width: '80%',
+            height: '150px',
+            backgroundColor: colors.background,
             margin: '0 auto',
-            height: '150px', // Adjust height as needed
           }}
           ref={blockGraphContainer}
         ></div>
