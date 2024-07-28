@@ -262,7 +262,7 @@ const colors = {
   
           svg.append("g")
             .attr("class", "x axis")
-            .attr("transform", `translate(0,${blockHeight - 20})`)
+            .attr("transform", `translate(0,${height - 20})`)
             .call(xAxis)
             .selectAll("text")
             .attr("fill", colors.label)
