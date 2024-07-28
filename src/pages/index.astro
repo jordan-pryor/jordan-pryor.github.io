@@ -7,6 +7,14 @@ import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
 import NetworkGraph from "../components/NetworkGraph";
+import { getCollection } from "astro:content";
+
+// Fetch the latest blog post
+const posts = (await getCollection("blog")).sort(
+  (a, b) => (b.data.pubDate || new Date()).getTime() - (a.data.pubDate || new Date()).getTime()
+);
+
+const latestPost = posts[0] || { data: { title: "No posts available" } };
 ---
 
 <script>
@@ -53,6 +61,17 @@ import NetworkGraph from "../components/NetworkGraph";
       transform: translateY(0);
     }
   }
+
+  .blog-card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #8aadf4; /* Blue */
+    transition: color 0.3s ease;
+  }
+
+  .blog-card-title:hover {
+    color: #7dc4e4; /* Sapphire */
+  }
 </style>
 
 <Layout
@@ -83,7 +102,11 @@ import NetworkGraph from "../components/NetworkGraph";
       rowSpan="md:row-span-2 flex gap-4"
       title="Blog"
       href="/blog"
-    />
+    >
+      <div class="p-4">
+        <h2 class="blog-card-title">Latest Post: {latestPost.data.title}</h2>
+      </div>
+    </Card>
     <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
       <p class="text-xs">
         © 2024 · Crafted with ♥️ using <a
