@@ -1,30 +1,40 @@
-import { useEffect, useRef, useState } from 'react';
-import * as d3 from 'd3';
+import { onMount } from "solid-js";
+import * as d3 from "d3";
 
 // Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
-const githubUsername = 'jordan-pryor';
+const githubUsername = "jordan-pryor";
+const githubOrg = "example-org"; // Replace with your organization name
 
-// Replace 'YOUR_ORG_NAME' with the actual GitHub organization name
-const githubOrg = 'fifthcirclestudios';
-
-// Define color palette
+// Color palette
 const colors = {
-  nodeFill: '#ed8796', // Red
-  nodeStroke: '#c6a0f6', // Mauve
-  link: '#8bd5ca', // Teal
-  label: '#cad3f5', // Text
-  background: '#24273a' // Base
+  nodeFill: "#ed8796", // Red
+  nodeStroke: "#c6a0f6", // Mauve
+  link: "#8bd5ca", // Teal
+  label: "#cad3f5", // Text
+  background: "#24273a", // Base
+  activityLow: "#a6da95", // Green
+  activityMedium: "#eed49f", // Yellow
+  activityHigh: "#f5a97f" // Peach
 };
 
-// Define color scale for block graph activity levels
-const colorScale = d3.scaleSequential(d3.interpolateViridis).domain([0, 100]);
-
 const NetworkGraph = () => {
-  const [repoData, setRepoData] = useState([]);
-  const [activityData, setActivityData] = useState([]);
-  const graphContainer = useRef(null);
+  let graphContainer: HTMLDivElement | undefined;
+  let blockGraphContainer: HTMLDivElement | undefined;
 
-  useEffect(() => {
+  onMount(() => {
+    if (!graphContainer || !blockGraphContainer) return;
+
+    const width = graphContainer.clientWidth;
+    const height = 500;
+
+    // Network Graph
+    const svg = d3
+      .select(graphContainer)
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .style("background-color", colors.background);
+
     // Fetch GitHub repositories
     fetch(`https://api.github.com/users/${githubUsername}/repos`)
       .then(response => response.json())
@@ -34,185 +44,169 @@ const NetworkGraph = () => {
           source: index === 0 ? nodes[0].id : nodes[Math.floor(Math.random() * index)].id,
           target: node.id
         }));
-        setRepoData({ nodes, links });
 
-        createNetworkGraph(nodes, links);
+        const simulation = d3.forceSimulation(nodes)
+          .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+          .force("charge", d3.forceManyBody().strength(-200))
+          .force("center", d3.forceCenter(width / 2, height / 2));
+
+        const link = svg.append("g")
+          .attr("class", "links")
+          .selectAll("line")
+          .data(links)
+          .enter()
+          .append("line")
+          .attr("stroke", colors.link)
+          .attr("stroke-width", 2);
+
+        const node = svg.append("g")
+          .attr("class", "nodes")
+          .selectAll("circle")
+          .data(nodes)
+          .enter()
+          .append("circle")
+          .attr("r", 10)
+          .attr("fill", colors.nodeFill)
+          .attr("stroke", colors.nodeStroke)
+          .attr("stroke-width", 1.5)
+          .on("click", (event, d) => {
+            window.open(d.url, "_blank");
+          })
+          .call(d3.drag()
+            .on("start", (event, d) => {
+              if (!event.active) simulation.alphaTarget(0.3).restart();
+              d.fx = d.x;
+              d.fy = d.y;
+            })
+            .on("drag", (event, d) => {
+              d.fx = event.x;
+              d.fy = event.y;
+            })
+            .on("end", (event, d) => {
+              if (!event.active) simulation.alphaTarget(0);
+              d.fx = null;
+              d.fy = null;
+            }));
+
+        const labels = svg.append("g")
+          .attr("class", "labels")
+          .selectAll("text")
+          .data(nodes)
+          .enter()
+          .append("text")
+          .attr("class", "label")
+          .attr("dy", -3)
+          .attr("dx", 12)
+          .text(d => d.id)
+          .attr("fill", colors.label);
+
+        simulation.on("tick", () => {
+          link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+          node
+            .attr("cx", d => d.x)
+            .attr("cy", d => d.y);
+
+          labels
+            .attr("x", d => d.x)
+            .attr("y", d => d.y);
+        });
       })
       .catch(error => console.error('Error fetching GitHub repos:', error));
 
-    // Fetch GitHub organization activity data
-    fetch(`https://api.github.com/orgs/${githubOrg}/repos`)
+    // Block Graph
+    const blockGraphWidth = width;
+    const blockGraphHeight = 100;
+    const daysInMonth = 30;
+
+    const blockSvg = d3
+      .select(blockGraphContainer)
+      .append("svg")
+      .attr("width", blockGraphWidth)
+      .attr("height", blockGraphHeight)
+      .style("background-color", colors.background);
+
+    const colorScale = d3.scaleLinear()
+      .domain([0, 50, 100]) // Replace these values with your own activity thresholds
+      .range([colors.activityLow, colors.activityMedium, colors.activityHigh]);
+
+    // Fetch activity data
+    fetch(`https://api.github.com/users/${githubUsername}/events`)
       .then(response => response.json())
-      .then(repos => {
-        const activity = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
-        setActivityData(activity);
-        createBlockGraph(activity);
+      .then(events => {
+        const activityData = Array(daysInMonth).fill(0);
+
+        events.forEach(event => {
+          const date = new Date(event.created_at);
+          const day = date.getDate();
+          if (day > 0 && day <= daysInMonth) {
+            activityData[day - 1]++;
+          }
+        });
+
+        const blockWidth = blockGraphWidth / daysInMonth;
+        const blockHeight = blockGraphHeight;
+
+        blockSvg.selectAll("rect")
+          .data(activityData)
+          .enter()
+          .append("rect")
+          .attr("x", (d, i) => i * blockWidth)
+          .attr("y", 0)
+          .attr("width", blockWidth)
+          .attr("height", blockHeight)
+          .attr("fill", d => colorScale(d))
+          .on("mouseover", (event, d) => {
+            d3.select(event.currentTarget)
+              .attr("stroke", "#fff")
+              .attr("stroke-width", 1.5);
+          })
+          .on("mouseout", (event, d) => {
+            d3.select(event.currentTarget)
+              .attr("stroke", "none");
+          });
+
+        // Add a legend
+        const legend = blockSvg.append("g")
+          .attr("transform", `translate(${blockGraphWidth - 120}, 10)`);
+
+        const legendWidth = 20;
+        const legendHeight = 60;
+
+        legend.selectAll("rect")
+          .data([0, 50, 100])
+          .enter()
+          .append("rect")
+          .attr("x", 0)
+          .attr("y", (d, i) => i * (legendHeight / 3))
+          .attr("width", legendWidth)
+          .attr("height", legendHeight / 3)
+          .attr("fill", d => colorScale(d))
+          .attr("stroke", "#000");
+
+        legend.selectAll("text")
+          .data([0, 50, 100])
+          .enter()
+          .append("text")
+          .attr("x", legendWidth + 5)
+          .attr("y", (d, i) => i * (legendHeight / 3) + (legendHeight / 6))
+          .text(d => `${d}`)
+          .attr("fill", "#fff")
+          .style("font-size", "12px");
       })
-      .catch(error => console.error('Error fetching GitHub org repos:', error));
-  }, []);
-
-  const createNetworkGraph = (nodes, links) => {
-    if (!graphContainer.current) return;
-    const width = graphContainer.current.clientWidth;
-    const height = 500;
-
-    const svg = d3.select(graphContainer.current)
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .style('background-color', colors.background);
-
-    const simulation = d3.forceSimulation(nodes)
-      .force('link', d3.forceLink(links).id(d => d.id).distance(100))
-      .force('charge', d3.forceManyBody().strength(-200))
-      .force('center', d3.forceCenter(width / 2, height / 2));
-
-    const link = svg.append('g')
-      .attr('class', 'links')
-      .selectAll('line')
-      .data(links)
-      .enter()
-      .append('line')
-      .attr('stroke', colors.link)
-      .attr('stroke-width', 2);
-
-    const node = svg.append('g')
-      .attr('class', 'nodes')
-      .selectAll('circle')
-      .data(nodes)
-      .enter()
-      .append('circle')
-      .attr('r', 10)
-      .attr('fill', colors.nodeFill)
-      .attr('stroke', colors.nodeStroke)
-      .attr('stroke-width', 1.5)
-      .on('click', (event, d) => {
-        window.open(d.url, '_blank');
-      })
-      .call(d3.drag()
-        .on('start', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0.3).restart();
-          d.fx = d.x;
-          d.fy = d.y;
-        })
-        .on('drag', (event, d) => {
-          d.fx = event.x;
-          d.fy = event.y;
-        })
-        .on('end', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0);
-          d.fx = null;
-          d.fy = null;
-        }));
-
-    const labels = svg.append('g')
-      .attr('class', 'labels')
-      .selectAll('text')
-      .data(nodes)
-      .enter()
-      .append('text')
-      .attr('class', 'label')
-      .attr('dy', -3)
-      .attr('dx', 12)
-      .text(d => d.id)
-      .attr('fill', colors.label);
-
-    simulation.on('tick', () => {
-      link
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
-
-      node
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y);
-
-      labels
-        .attr('x', d => d.x)
-        .attr('y', d => d.y);
-    });
-  };
-
-  const createBlockGraph = (data) => {
-    const graphContainerElement = document.getElementById('block-graph');
-    if (!graphContainerElement) return;
-
-    const width = graphContainerElement.clientWidth;
-    const height = 150;
-
-    const svg = d3.select(graphContainerElement)
-      .append('svg')
-      .attr('width', width)
-      .attr('height', height);
-
-    const blockWidth = width / 30;
-
-    // Create blocks
-    svg.selectAll('rect')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('x', (d, i) => i * blockWidth)
-      .attr('y', d => height - d)
-      .attr('width', blockWidth)
-      .attr('height', d => d)
-      .attr('fill', d => colorScale(d))
-      .attr('stroke', '#000')
-      .attr('stroke-width', 0.5)
-      .on('mouseover', (event, d) => {
-        d3.select(event.target)
-          .attr('stroke-width', 2);
-        d3.select('#block-tooltip')
-          .style('visibility', 'visible')
-          .text(`Activity: ${d}`);
-      })
-      .on('mousemove', (event) => {
-        d3.select('#block-tooltip')
-          .style('top', `${event.pageY}px`)
-          .style('left', `${event.pageX + 10}px`);
-      })
-      .on('mouseout', (event) => {
-        d3.select(event.target)
-          .attr('stroke-width', 0.5);
-        d3.select('#block-tooltip')
-          .style('visibility', 'hidden');
-      });
-
-    // Add X Axis labels for dates
-    svg.append('g')
-      .attr('transform', `translate(0, ${height})`)
-      .call(d3.axisBottom(d3.scaleLinear().domain([0, 30]).range([0, width])).ticks(30).tickFormat((d, i) => i + 1));
-
-    // Add tooltip
-    d3.select('body').append('div')
-      .attr('id', 'block-tooltip')
-      .style('position', 'absolute')
-      .style('visibility', 'hidden')
-      .style('background', '#fff')
-      .style('padding', '5px')
-      .style('border-radius', '3px')
-      .style('box-shadow', '0px 0px 6px rgba(0,0,0,0.1)');
-  };
+      .catch(error => console.error('Error fetching GitHub events:', error));
+  });
 
   return (
-    <div className="relative flex flex-col text-white w-full h-screen bg-darkslate-700 p-4">
-      <div className="relative w-full h-[500px] bg-darkslate-600 mb-8" ref={graphContainer}></div>
-      <div className="relative flex flex-col text-white w-full h-[200px] bg-darkslate-700">
-        <div id="block-graph" className="w-full h-full"></div>
-        <div id="block-tooltip" className="tooltip"></div>
-        <div className="absolute bottom-0 left-0 p-4">
-          <div className="text-white font-bold">Activity Levels</div>
-          <div className="flex">
-            <div className="w-4 h-4 bg-[#440154] mx-1"></div><span>0%</span>
-            <div className="w-4 h-4 bg-[#3b528b] mx-1"></div><span>20%</span>
-            <div className="w-4 h-4 bg-[#21908d] mx-1"></div><span>40%</span>
-            <div className="w-4 h-4 bg-[#5dc863] mx-1"></div><span>60%</span>
-            <div className="w-4 h-4 bg-[#f8f800] mx-1"></div><span>100%</span>
-          </div>
-        </div>
-      </div>
+    <div class="flex flex-col text-white justify-center items-center w-full h-full">
+      <div class="w-full" ref={graphContainer}></div>
+      <div class="w-full" ref={blockGraphContainer}></div>
     </div>
   );
 };
+
 export default NetworkGraph;
