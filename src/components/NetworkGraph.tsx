@@ -142,8 +142,8 @@ const NetworkGraph = () => {
       .catch(error => console.error('Error fetching GitHub repos:', error));
 
     // Block Graph
-    const blockGraphWidth = width;
-    const blockGraphHeight = 100;
+    const blockGraphWidth = width * 0.9; // Adjust the width to fit within the screen
+    const blockGraphHeight = 80; // Reduced height for a smaller graph
     const daysInMonth = 30;
 
     const blockSvg = d3
@@ -231,7 +231,17 @@ const NetworkGraph = () => {
   return (
     <div class="flex flex-col text-white justify-center items-center w-full h-full">
       <div class="w-full" ref={graphContainer}></div>
-      <div class="w-full" ref={blockGraphContainer}></div>
+      <div class="w-full flex justify-center items-center">
+        <div
+          class="relative"
+          style={{
+            width: '90%', // Adjust the width to center the graph and leave space on the sides
+            margin: '0 auto',
+            height: '80px', // Adjust the height as needed
+          }}
+          ref={blockGraphContainer}
+        ></div>
+      </div>
     </div>
   );
 };
