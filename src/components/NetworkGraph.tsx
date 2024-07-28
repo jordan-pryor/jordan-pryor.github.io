@@ -57,7 +57,18 @@ const NetworkGraph = () => {
           .enter()
           .append("line")
           .attr("stroke", colors.link)
-          .attr("stroke-width", 2);
+          .attr("stroke-width", 2)
+          .attr("opacity", 0.6)
+          .on("mouseover", function() {
+            d3.select(this)
+              .attr("stroke-width", 4)
+              .attr("opacity", 1);
+          })
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("stroke-width", 2)
+              .attr("opacity", 0.6);
+          });
 
         const node = svg.append("g")
           .attr("class", "nodes")
@@ -71,6 +82,18 @@ const NetworkGraph = () => {
           .attr("stroke-width", 1.5)
           .on("click", (event, d) => {
             window.open(d.url, "_blank");
+          })
+          .on("mouseover", function() {
+            d3.select(this)
+              .attr("r", 15)
+              .attr("fill", "#fff")
+              .attr("stroke", "#000");
+          })
+          .on("mouseout", function() {
+            d3.select(this)
+              .attr("r", 10)
+              .attr("fill", colors.nodeFill)
+              .attr("stroke", colors.nodeStroke);
           })
           .call(d3.drag()
             .on("start", (event, d) => {
@@ -130,8 +153,9 @@ const NetworkGraph = () => {
       .attr("height", blockGraphHeight)
       .style("background-color", colors.background);
 
+    // Color scale for activity levels
     const colorScale = d3.scaleLinear()
-      .domain([0, 50, 100]) // Replace these values with your own activity thresholds
+      .domain([0, 10, 20]) // Adjust these values based on your activity data
       .range([colors.activityLow, colors.activityMedium, colors.activityHigh]);
 
     // Fetch activity data
@@ -160,6 +184,8 @@ const NetworkGraph = () => {
           .attr("width", blockWidth)
           .attr("height", blockHeight)
           .attr("fill", d => colorScale(d))
+          .attr("stroke", "#000")
+          .attr("stroke-width", 0.5)
           .on("mouseover", (event, d) => {
             d3.select(event.currentTarget)
               .attr("stroke", "#fff")
@@ -167,7 +193,8 @@ const NetworkGraph = () => {
           })
           .on("mouseout", (event, d) => {
             d3.select(event.currentTarget)
-              .attr("stroke", "none");
+              .attr("stroke", "#000")
+              .attr("stroke-width", 0.5);
           });
 
         // Add a legend
@@ -178,7 +205,7 @@ const NetworkGraph = () => {
         const legendHeight = 60;
 
         legend.selectAll("rect")
-          .data([0, 50, 100])
+          .data([0, 10, 20])
           .enter()
           .append("rect")
           .attr("x", 0)
@@ -189,7 +216,7 @@ const NetworkGraph = () => {
           .attr("stroke", "#000");
 
         legend.selectAll("text")
-          .data([0, 50, 100])
+          .data([0, 10, 20])
           .enter()
           .append("text")
           .attr("x", legendWidth + 5)
