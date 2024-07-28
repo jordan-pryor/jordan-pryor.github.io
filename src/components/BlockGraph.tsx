@@ -62,6 +62,7 @@ const BlockGraph = () => {
         const blockWidth = (width - 40) / 31;
         const blockHeight = 20;
 
+        // Create blocks with correct color and interactivity
         svg.append("g")
           .attr("class", "blocks")
           .selectAll("rect")
@@ -81,13 +82,16 @@ const BlockGraph = () => {
           .attr("width", d => d.width)
           .attr("height", d => d.height)
           .attr("fill", d => d.color)
+          .style("stroke", "#000")
+          .style("stroke-width", "0.5px")
           .on("mouseover", function() {
-            d3.select(this).attr("fill", "#f5bde6");
+            d3.select(this).style("fill", "#f5bde6"); // Highlight color
           })
           .on("mouseout", function(d) {
-            d3.select(this).attr("fill", d.color);
+            d3.select(this).style("fill", d.color); // Restore original color
           });
 
+        // Add x and y axes
         const xAxisScale = d3.scaleLinear()
           .domain([0, 31])
           .range([0, width - 40]);
@@ -120,6 +124,7 @@ const BlockGraph = () => {
           .attr("fill", "#cad3f5") // Text
           .style("font-size", "10px");
 
+        // Add color key
         const colorKeySvg = d3.select(blockGraphContainer).append("svg")
           .attr("width", width - 40)
           .attr("height", 60)
