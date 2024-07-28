@@ -3,7 +3,7 @@ import * as d3 from "d3";
 
 // Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
 const githubUsername = "jordan-pryor";
-const githubOrg = "example-org"; // Replace with your organization name
+const githubOrg = "fifthcirclestudios"; // Replace with your organization name
 
 // Color palette
 const colors = {
