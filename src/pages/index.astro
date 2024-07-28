@@ -6,7 +6,6 @@ import ContactsCard from "../components/ContactsCard.astro";
 import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
-import Globe from "../components/Globe";
 import NetworkGraph from "../components/NetworkGraph";
 ---
 
@@ -32,6 +31,30 @@ import NetworkGraph from "../components/NetworkGraph";
   timeline(sequence as TimelineDefinition);
 </script>
 
+<style>
+  .card-title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+  }
+  
+  .network-graph-container {
+    animation: fadeInUp 1s ease-in-out;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
 <Layout
   title="Jordan Pryor - Freelance Game/Software Developer"
   description="I'm a developer based in Nashville, passionate about making interesting and innovative games and software, or even improving on ideas or already developed software."
@@ -51,9 +74,10 @@ import NetworkGraph from "../components/NetworkGraph";
       href="projects"
       colorText="text-neutral-900"
     >
-      <div class="h-full w-full absolute inset-0 -z-10">
+      <div class="h-full w-full absolute inset-0 -z-10 network-graph-container">
         <NetworkGraph client:load />
       </div>
+      <div class="card-title">Current Projects</div>
     </Card>
     <Card
       colSpan="md:col-span-1"
