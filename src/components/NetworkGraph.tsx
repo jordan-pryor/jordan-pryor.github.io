@@ -17,7 +17,7 @@ const NetworkGraph = () => {
   let graphContainer: HTMLDivElement | undefined;
   let activityContainer: HTMLDivElement | undefined;
 
-  onMount(() => {
+  const drawGraph = () => {
     if (!graphContainer || !activityContainer) return;
 
     const width = graphContainer.clientWidth;
@@ -93,7 +93,9 @@ const NetworkGraph = () => {
           .attr("dy", -3)
           .attr("dx", 12)
           .text(d => d.id)
-          .attr("fill", colors.label);
+          .attr("fill", colors.label)
+          .attr("font-size", "12px")
+          .attr("text-anchor", "middle");
 
         simulation.on("tick", () => {
           link
@@ -167,6 +169,17 @@ const NetworkGraph = () => {
         svgActivity.append("g").call(yAxis);
       })
       .catch(error => console.error('Error fetching GitHub activity:', error));
+  };
+
+  onMount(() => {
+    drawGraph();
+
+    // Redraw the graph on window resize
+    window.addEventListener("resize", () => {
+      d3.select(graphContainer).select("svg").remove();
+      d3.select(activityContainer).select("svg").remove();
+      drawGraph();
+    });
   });
 
   return (
