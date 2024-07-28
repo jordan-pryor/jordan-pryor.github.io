@@ -15,7 +15,7 @@ To view my portfolio, **[click here](https://jordan-pryor.netlify.app/)**
 - Ready to be deployed on [Netlify](https://www.netlify.com/)
 - Blog
 - RSS support (your-domain/rss.xml)
-- Cool 3D globe
+- Cool Reactive Web, for All github your github Repos!
 
 ## Tech Stack
 
