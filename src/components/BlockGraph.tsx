@@ -18,6 +18,9 @@ const colorKey = [
   { label: "Very High Activity", color: colors.veryHighActivity }
 ];
 
+// Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
+const githubUsername = "jordan-pryor";
+
 const BlockGraph = () => {
   let blockGraphContainer: HTMLDivElement | undefined;
 
@@ -35,7 +38,7 @@ const BlockGraph = () => {
       .style("background-color", "#24273a"); // Base
 
     // Fetch GitHub events
-    fetch(`https://api.github.com/users/jordan-pryor/events`)
+    fetch(`https://api.github.com/users/${githubUsername}/events`)
       .then(response => response.json())
       .then(events => {
         const now = new Date();
@@ -59,7 +62,7 @@ const BlockGraph = () => {
         const blockWidth = (width - 40) / 31;
         const blockHeight = 20;
 
-        const blocks = svg.append("g")
+        svg.append("g")
           .attr("class", "blocks")
           .selectAll("rect")
           .data(activityCounts.flatMap((counts, level) => 
