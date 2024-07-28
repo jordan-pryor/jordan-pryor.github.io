@@ -1,23 +1,21 @@
-# ⚡️astro-bento-portfolio
+# ⚡️jordan-pryorPortfolio
 
 ## A personal portfolio website made using `Astro`.
 
-![astro-bento-portfolio | Bento-like Personal Porfolio Template](public/preview.png)
+![jordan-pryorPortfolio | Bento-like Personal Portfolio Template](public/preview.png)
 
-To view a demo example, **[click here](https://sparkly-speculoos-0c9197.netlify.app/)**
-
-or my portfolio **[click here](https://gianmarco.xyz/)**
+To view my portfolio, **[click here](https://jordan-pryor.netlify.app/)**
 
 ## Features
 
 - Modern and Minimal bento-like, sleek UI Design
 - All in one page (almost)
 - Fully Responsive
-- Performances and SEO optimizations
+- Performance and SEO optimizations
 - Ready to be deployed on [Netlify](https://www.netlify.com/)
 - Blog
 - RSS support (your-domain/rss.xml)
-- Cool 3d globe
+- Cool Reactive Web, for All github your github Repos!
 
 ## Tech Stack
 
@@ -30,12 +28,12 @@ or my portfolio **[click here](https://gianmarco.xyz/)**
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/Ladvace/astro-bento-portfolio
+$ git clone https://github.com/yourusername/jordan-pryorPortfolio
 ```
 
 ```bash
 # Go into the repository
-$ cd astro-bento-portfolio
+$ cd jordan-pryorPortfolio
 ```
 
 ```bash
@@ -56,18 +54,24 @@ $ npm run dev
 
 # Configuration
 
-remember to replace the `site` and other properties with your data in `astro.config.mjs`
+Remember to replace the `site` and other properties with your data in `astro.config.mjs`
 
 # Deploy on Netlify 🚀
 
-Deploying your website on Netlify it's optional but I reccomand it in order to deploy it faster and easly.
+Deploying your website on Netlify is optional but recommended for faster and easier deployment.
 
-You just need to fork this repo and linking it to your Netlify account.
+You just need to fork this repo and link it to your Netlify account.
 
 or
 
-[![Netlify Deploy button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/Ladvace/astro-bento-portfolio)
+[![Netlify Deploy button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/yourusername/jordan-pryorPortfolio)
 
 ## Authors ❤️
 
-- Gianmarco - https://github.com/Ladvace
+- Jordan Pryor - https://github.com/yourusername
+- Based on the template by Gianmarco - https://github.com/Ladvace
+
+## Credits
+
+- Color scheme inspired by [Catppuccin Macchiato](https://github.com/catppuccin/catppuccin)
+- Template originally created by [astro-bento-portfolio](https://github.com/Ladvace/astro-bento-portfolio)
