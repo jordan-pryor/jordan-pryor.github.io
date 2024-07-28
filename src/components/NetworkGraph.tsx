@@ -15,9 +15,10 @@ const colors = {
 
 const NetworkGraph = () => {
   let graphContainer: HTMLDivElement | undefined;
+  let activityContainer: HTMLDivElement | undefined;
 
   onMount(() => {
-    if (!graphContainer) return;
+    if (!graphContainer || !activityContainer) return;
 
     const width = graphContainer.clientWidth;
     const height = 500;
@@ -111,13 +112,70 @@ const NetworkGraph = () => {
         });
       })
       .catch(error => console.error('Error fetching GitHub repos:', error));
+
+    // Fetch GitHub user activity
+    fetch(`https://api.github.com/users/${githubUsername}/events`)
+      .then(response => response.json())
+      .then(events => {
+        const activityData = events.map(event => ({
+          type: event.type,
+          repo: event.repo.name,
+          date: new Date(event.created_at)
+        }));
+
+        const activityWidth = activityContainer.clientWidth;
+        const activityHeight = 300;
+        const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+
+        const svgActivity = d3
+          .select(activityContainer)
+          .append("svg")
+          .attr("width", activityWidth)
+          .attr("height", activityHeight)
+          .style("background-color", colors.background);
+
+        const x = d3.scaleTime()
+          .domain(d3.extent(activityData, d => d.date))
+          .range([margin.left, activityWidth - margin.right]);
+
+        const y = d3.scaleBand()
+          .domain(activityData.map(d => d.type))
+          .range([margin.top, activityHeight - margin.bottom])
+          .padding(0.1);
+
+        const xAxis = g => g
+          .attr("transform", `translate(0,${activityHeight - margin.bottom})`)
+          .call(d3.axisBottom(x).ticks(activityWidth / 80).tickSizeOuter(0));
+
+        const yAxis = g => g
+          .attr("transform", `translate(${margin.left},0)`)
+          .call(d3.axisLeft(y))
+          .call(g => g.select(".domain").remove());
+
+        svgActivity.append("g")
+          .selectAll("rect")
+          .data(activityData)
+          .enter()
+          .append("rect")
+          .attr("x", d => x(d.date))
+          .attr("y", d => y(d.type))
+          .attr("width", 10)
+          .attr("height", y.bandwidth())
+          .attr("fill", colors.nodeFill);
+
+        svgActivity.append("g").call(xAxis);
+        svgActivity.append("g").call(yAxis);
+      })
+      .catch(error => console.error('Error fetching GitHub activity:', error));
   });
 
   return (
     <div class="flex flex-col text-white justify-center items-center w-full h-full">
-      <div class="w-full" ref={graphContainer}></div>
+      <div class="w-full" ref={el => (graphContainer = el)}></div>
+      <div class="w-full" ref={el => (activityContainer = el)}></div>
     </div>
   );
 };
 
 export default NetworkGraph;
+
