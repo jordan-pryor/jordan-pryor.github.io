@@ -1,4 +1,4 @@
-# ⚡️jordan-pryorPortfolio
+# ⚡️jordan-pryor Portfolio
 
 ## A personal portfolio website made using `Astro`.
 
