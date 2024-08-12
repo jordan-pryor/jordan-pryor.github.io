@@ -11,7 +11,7 @@ import { getCollection } from "astro:content";
 
 // Fetch the latest blog post
 const posts = (await getCollection("blog")).sort(
-  (a, b) => (b.data.pubDate || new Date()).getTime() - (a.data.pubDate || new Date()).getTime()
+    (a, b) => (b.data.pubDate || new Date()).getTime() - (a.data.pubDate || new Date()).getTime()
 );
 
 const latestPost = posts[0] || { data: { title: "No posts available" } };
@@ -44,9 +44,9 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
     position: absolute;
     top: 10px;
     left: 10px;
-    color: #cad3f5; /* Text */
+    color: #f8f8f2; /* Foreground Color */
   }
-  
+
   .network-graph-container {
     animation: fadeInUp 1s ease-in-out;
   }
@@ -65,21 +65,39 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
   .blog-card-title {
     font-size: 1.25rem;
     font-weight: bold;
-    color: #8aadf4; /* Blue */
+    color: #8be9fd; /* Cyan Color */
     transition: color 0.3s ease;
   }
 
   .blog-card-title:hover {
-    color: #7dc4e4; /* Sapphire */
+    color: #50fa7b; /* Green Color */
+  }
+
+  main {
+    background-color: #282a36; /* Background Color */
+    color: #f8f8f2; /* Foreground Color */
+  }
+
+  a {
+    color: #ff5555; /* Red Color */
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #ff79c6; /* Pink Color */
+  }
+
+  p.text-xs {
+    color: #6272a4; /* Comment Color */
   }
 </style>
 
 <Layout
-  title="Jordan Pryor - Freelance Game/Software Developer"
-  description="I'm a developer based in Nashville, passionate about making interesting and innovative games and software, or even improving on ideas or already developed software."
+    title="Jordan Pryor - Freelance Game/Software Developer"
+    description="I'm a developer based in Nashville, passionate about making interesting and innovative games and software, or even improving on ideas or already developed software."
 >
   <main
-    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+      class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
   >
     <IntroCard />
     <AboutMe />
@@ -87,21 +105,21 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
     <TimeZone />
     <Now />
     <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-1"
-      title="Current Projects"
-      href="projects"
-      colorText="text-neutral-900"
+        colSpan="md:col-span-1"
+        rowSpan="md:row-span-1"
+        title="Current Projects"
+        href="projects"
+        colorText="text-neutral-900"
     >
       <div class="h-full w-full absolute inset-0 -z-10 network-graph-container">
         <NetworkGraph client:load />
       </div>
     </Card>
     <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-2 flex gap-4"
-      title="Blog"
-      href="/blog"
+        colSpan="md:col-span-1"
+        rowSpan="md:row-span-2 flex gap-4"
+        title="Blog"
+        href="/blog"
     >
       <div class="p-4">
         <h2 class="blog-card-title">Latest Post: {latestPost.data.title}</h2>
@@ -113,7 +131,7 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
           href="https://astro.build/"
           target="_blank"
           class="text-red-500">Astro</a
-        > by Gianmarco & Jordan.
+      > by Gianmarco & Jordan.
       </p>
     </Card>
   </main>
