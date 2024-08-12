@@ -15,26 +15,25 @@ const { frontmatter } = Astro.props;
 ---
 
 <BasicLayout
-  frontmatter={frontmatter}
-  slug={slug}
-  page="blog"
-  title={`Gianmarco Cavallo - ${frontmatter.title}`}
-  description={frontmatter.description}
+    frontmatter={frontmatter}
+    slug={slug}
+    page="blog"
+    title={`Jordan Pryor - ${frontmatter.title}`}
+    description={frontmatter.description}
 >
-  <main class="mx-auto max-w-3xl w-full h-screen p-8 text-[#cad3f5]">
+  <main class="mx-auto max-w-3xl w-full h-screen p-8 text-[#f8f8f2]">
     <a
-      href="/blog"
-      class="text-[#cad3f5] bg-[#1e2030] hover:bg-[#363a4f] px-4 py-2 border border-solid border-[#494d64] rounded-lg mb-8"
-      >Back</a
-    >
+        href="/blog"
+        class="text-[#f8f8f2] bg-[#282a36] hover:bg-[#44475a] px-4 py-2 border border-solid border-[#6272a4] rounded-lg mb-8"
+    >Back</a>
     <div class="my-10">
       <h1 class="text-5xl font-semibold">{frontmatter.title}</h1>
-      <div class="flex justify-between pt-4 text-[#939ab7] text-sm">
+      <div class="flex justify-between pt-4 text-[#6272a4] text-sm">
         <p>{formatDate(new Date(frontmatter.pubDate))}</p>
         <p>{frontmatter.minutesRead}</p>
       </div>
     </div>
-    <article class="prose prose-p:text-[#ed8796] prose-slate prose-invert">
+    <article class="prose prose-p:text-[#f8f8f2] prose-h1:text-[#bd93f9] prose-h2:text-[#bd93f9] prose-h3:text-[#bd93f9] prose-a:text-[#ff79c6] prose-code:bg-[#44475a] prose-code:text-[#f8f8f2] prose-invert">
       <slot />
     </article>
   </main>

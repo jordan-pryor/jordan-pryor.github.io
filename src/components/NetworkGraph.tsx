@@ -6,11 +6,11 @@ const githubUsername = "jordan-pryor";
 
 // Color palette
 const colors = {
-    nodeFill: "#ed8796", // Red
-    nodeStroke: "#c6a0f6", // Mauve
-    link: "#8bd5ca", // Teal
-    label: "#cad3f5", // Text
-    background: "#24273a", // Base
+    nodeFill: "#ff5555", // Red
+    nodeStroke: "#bd93f9", // Purple
+    link: "#8be9fd", // Cyan
+    label: "#f8f8f2", // Foreground
+    background: "#282a36", // Background
 };
 
 // Function to calculate luminance
