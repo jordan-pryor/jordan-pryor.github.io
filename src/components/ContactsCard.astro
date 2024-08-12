@@ -1,24 +1,25 @@
+---
 import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
 ---
 
 <style>
   .contact-header {
-    color: #f8f8f2; /* Foreground */
+    color: #cad3f5; /* Text */
   }
 
   .contact-details,
   .socials-title {
-    color: #6272a4; /* Comment */
+    color: #8087a2; /* Overlay1 */
   }
 
   .contact-info,
   .social-links a {
-    color: #f8f8f2; /* Foreground */
+    color: #f4dbd6; /* Rosewater */
   }
 
   .social-links a:hover {
-    color: #8be9fd; /* Cyan */
+    color: #8aadf4; /* Blue */
   }
 </style>
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
@@ -38,6 +39,7 @@ import { LINKS } from "../lib/constants";
       <ul class="social-links">
         <li><a href={LINKS.linkedin} target="_blank">Linkedin</a></li>
         <li><a href={LINKS.github} target="_blank">Github</a></li>
+        <li><a href={LINKS.medium} target="_blank">Medium</a></li>
         <li><a href={LINKS.discord} target="_blank">Discord</a></li>
       </ul>
     </div>

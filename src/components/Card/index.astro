@@ -3,60 +3,41 @@ import { Icon } from "astro-icon/components";
 import Content from "./Content.astro";
 
 interface Props {
-    title?: string;
-    body?: string;
-    colSpan?: string;
-    rowSpan?: string;
-    href?: string;
-    colorText?: string;
-    height?: string;
-    width?: string;
+  title?: string;
+  body?: string;
+  colSpan?: string;
+  rowSpan?: string;
+  href?: string;
+  colorText?: string;
+  height?: string;
+  width?: string;
 }
 
 const { title, body, colSpan, rowSpan, href, colorText, height } = Astro.props;
 ---
 
-<style>
-    .card {
-        background-color: #1e2030; /* Dark background for the card */
-        border-color: #494d64; /* Border color */
-    }
-    .card:hover {
-        border-color: #8aadf4; /* Hover border color */
-    }
-    .card-icon {
-        color: #cad3f5; /* Default icon color */
-    }
-    .card-icon:hover {
-        color: #8aadf4; /* Icon color on hover */
-    }
-    .card-text {
-        color: #cad3f5; /* Text color */
-    }
-</style>
-
 <div
-        class={`card h-max sm:h-auto group overflow-hidden transform-y-[-40%] shadow-lg rounded-lg p-6 border ${
-            height || "h-full"
-        } justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 ${
-            colSpan || "md:col-span-2"
-        } ${rowSpan || ""}`}
+  class={`card h-max sm:h-auto group overflow-hidden transform-y-[-40%] bg-[#1e2030] shadow-lg rounded-lg p-6 border border-[#494d64] hover:border-[#8aadf4] align-start flex-none ${
+    height || "h-full"
+  } justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 ${
+    colSpan || "md:col-span-2"
+  } ${rowSpan || ""}`}
 >
-    {
-        href ? (
-                <a href={href} class={`h-full w-full ${colorText || "card-text"}`}>
-                    <Icon
-                            name="ri:arrow-right-up-line"
-                            class="card-icon h-6 float-right group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 z-20"
-                    />
-                    <Content title={title} body={body}>
-                        <slot />
-                    </Content>
-                </a>
-        ) : (
-                <Content title={title} body={body}>
-                    <slot />
-                </Content>
-        )
-    }
+  {
+    href ? (
+      <a href={href} class={`h-full w-full ${colorText || ""}`}>
+        <Icon
+          name="ri:arrow-right-up-line"
+          class="h-6 float-right group-hover:text-[#8aadf4] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 z-20"
+        />
+        <Content title={title} body={body}>
+          <slot />
+        </Content>
+      </a>
+    ) : (
+      <Content title={title} body={body}>
+        <slot />
+      </Content>
+    )
+  }
 </div>
