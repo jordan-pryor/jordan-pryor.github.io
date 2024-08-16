@@ -18,15 +18,54 @@ import BasicLayout from "../layouts/BasicLayout.astro";
   timeline(sequence as TimelineDefinition);
 </script>
 
+<style>
+  body {
+    background-color: #282a36; /* Background */
+    color: #f8f8f2; /* Foreground */
+  }
+
+  a {
+    color: #f8f8f2; /* Foreground */
+    background-color: #44475a; /* Current Line */
+    border-color: #6272a4; /* Comment */
+    transition: background-color 0.3s ease;
+  }
+
+  a:hover {
+    background-color: #44475a; /* Current Line Hover */
+    border-color: #8be9fd; /* Cyan */
+  }
+
+  .text-white {
+    color: #f8f8f2; /* Foreground */
+  }
+
+  .bg-neutral-900 {
+    background-color: #282a36; /* Background */
+  }
+
+  .hover\:bg-neutral-800:hover {
+    background-color: #44475a; /* Current Line */
+  }
+
+  .border-neutral-600 {
+    border-color: #6272a4; /* Comment */
+  }
+
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+</style>
+
 <BasicLayout
-  title="Jordan Pryor - Current Projects"
-  description="A network graph showing current projects"
-  page="projects"
+    title="Jordan Pryor - Current Projects"
+    description="A network graph showing current projects"
+    page="projects"
 >
   <a
-    href="/"
-    class="text-white absolute bg-neutral-900 hover:bg-neutral-800 top-4 left-4 px-4 py-2 border-1 border-solid border-neutral-600 rounded-lg"
-    >Back</a
+      href="/"
+      class="text-white absolute bg-neutral-900 hover:bg-neutral-800 top-4 left-4 px-4 py-2 border-1 border-solid border-neutral-600 rounded-lg"
+  >Back</a
   >
 
   <NetworkGraph client:load />

@@ -4,9 +4,9 @@ import Layout from "../../layouts/Layout.astro";
 import PostRow from "../../components/Blog/PostRow.astro";
 
 const posts = (await getCollection("blog"))?.sort(
-  (blogEntryA, blogEntryB) =>
-    (blogEntryB.data.pubDate || new Date()).getTime() -
-    (blogEntryA.data.pubDate || new Date()).getTime()
+    (blogEntryA, blogEntryB) =>
+        (blogEntryB.data.pubDate || new Date()).getTime() -
+        (blogEntryA.data.pubDate || new Date()).getTime()
 );
 ---
 
@@ -19,27 +19,112 @@ const posts = (await getCollection("blog"))?.sort(
   timeline(sequence as TimelineDefinition);
 </script>
 
+<style>
+  body {
+    background-color: #282a36; /* Background */
+    color: #f8f8f2; /* Foreground */
+  }
+
+  a {
+    color: #f8f8f2; /* Foreground */
+    background-color: #44475a; /* Current Line */
+    border-color: #6272a4; /* Comment */
+    transition: background-color 0.3s ease;
+  }
+
+  a:hover {
+    background-color: #44475a; /* Current Line Hover */
+    border-color: #8be9fd; /* Cyan */
+  }
+
+  .text-white {
+    color: #f8f8f2; /* Foreground */
+  }
+
+  .bg-neutral-900 {
+    background-color: #282a36; /* Background */
+  }
+
+  .hover\:bg-neutral-800:hover {
+    background-color: #44475a; /* Current Line */
+  }
+
+  .border-neutral-600 {
+    border-color: #6272a4; /* Comment */
+  }
+
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+
+  .text-neutral-100 {
+    color: #f8f8f2; /* Foreground */
+  }
+
+  .text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+
+  .mb-8 {
+    margin-bottom: 2rem;
+  }
+
+  .w-screen {
+    width: 100vw;
+  }
+
+  .h-screen {
+    height: 100vh;
+  }
+
+  .max-w-3xl {
+    max-width: 48rem;
+  }
+
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .p-8 {
+    padding: 2rem;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+</style>
+
 <Layout
-  title="Jordan Pryor - Blog"
-  description="Indie developer with a passion for Video Games"
+    title="Jordan Pryor - Blog"
+    description="Indie developer with a passion for Video Games"
 >
   <main
-    class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8"
+      class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8"
   >
     <a
-      href="/"
-      class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
-      >Back</a
+        href="/"
+        class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
+    >Back</a
     >
     <h1 class="text-4xl font-bold mb-4 text-neutral-100">Posts</h1>
     <ul class="w-full">
       {
         posts?.map((post) => (
-          <PostRow
-            title={post.data.title || "No title"}
-            date={post.data.pubDate || new Date()}
-            url={post.slug}
-          />
+            <PostRow
+                title={post.data.title || "No title"}
+                date={post.data.pubDate || new Date()}
+                url={post.slug}
+            />
         ))
       }
     </ul>
