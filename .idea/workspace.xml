@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e7285d3c-4927-4093-81af-930771d3c6c2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/TimeZoneCard.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TimeZoneCard.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Card/index.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card/index.astro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +55,7 @@
       <option name="presentableId" value="Default" />
       <updated>1723524756064</updated>
       <workItem from="1723524757255" duration="13000" />
-      <workItem from="1723784510376" duration="486000" />
+      <workItem from="1723784510376" duration="658000" />
     </task>
     <servers />
   </component>
