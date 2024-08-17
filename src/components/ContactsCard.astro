@@ -2,28 +2,30 @@
 import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
 ---
-
 <style>
   .contact-header {
-    color: #cad3f5; /* Text */
+    color: #bd93f9; /* Purple */
   }
 
   .contact-details,
   .socials-title {
-    color: #8087a2; /* Overlay1 */
+    color: #f8f8f2; /* Foreground */
   }
 
   .contact-info,
   .social-links a {
     color: #f4dbd6; /* Rosewater */
+    word-break: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Handle long text */
   }
 
   .social-links a:hover {
-    color: #8aadf4; /* Blue */
+    color: #ff79c6; /* Pink */
   }
 </style>
+
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
-  <div class="h-full flex flex-col">
+  <div class="h-full flex flex-col bg-[#282a36] text-[#f8f8f2]">
     <header class="flex items-center">
       <h1 class="contact-header text-xl font-bold">
         Let's start working together!
@@ -37,9 +39,8 @@ import { LINKS } from "../lib/constants";
     <div class="flex flex-col mt-4 w-fit">
       <h2 class="socials-title">Socials</h2>
       <ul class="social-links">
-        <li><a href={LINKS.linkedin} target="_blank">Linkedin</a></li>
-        <li><a href={LINKS.github} target="_blank">Github</a></li>
-        <li><a href={LINKS.medium} target="_blank">Medium</a></li>
+        <li><a href={LINKS.linkedin} target="_blank">LinkedIn</a></li>
+        <li><a href={LINKS.github} target="_blank">GitHub</a></li>
         <li><a href={LINKS.discord} target="_blank">Discord</a></li>
       </ul>
     </div>
