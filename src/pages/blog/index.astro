@@ -20,47 +20,54 @@ const posts = (await getCollection("blog"))?.sort(
 </script>
 
 <style>
+  /* General Background and Text Colors */
   body {
     background-color: #282a36; /* Background */
     color: #f8f8f2; /* Foreground */
   }
 
+  /* Links and Hover States */
   a {
-    color: #f8f8f2; /* Foreground */
-    background-color: #44475a; /* Current Line */
-    border-color: #6272a4; /* Comment */
+    color: #f8f8f2; /* Foreground (Text) */
+    background-color: #44475a; /* Current Line (Background) */
+    border-color: #6272a4; /* Comment (Border) */
     transition: background-color 0.3s ease;
   }
 
   a:hover {
-    background-color: #44475a; /* Current Line Hover */
-    border-color: #8be9fd; /* Cyan */
+    background-color: #bd93f9; /* Purple on Hover */
+    border-color: #8be9fd; /* Cyan (Border on Hover) */
   }
 
+  /* Text Colors */
   .text-white {
-    color: #f8f8f2; /* Foreground */
+    color: #f8f8f2; /* Foreground (Text) */
   }
 
+  .text-neutral-100 {
+    color: #f8f8f2; /* Foreground (Text) */
+  }
+
+  /* Background Colors */
   .bg-neutral-900 {
     background-color: #282a36; /* Background */
   }
 
   .hover\:bg-neutral-800:hover {
-    background-color: #44475a; /* Current Line */
+    background-color: #44475a; /* Current Line (Hover) */
   }
 
+  /* Border Color */
   .border-neutral-600 {
-    border-color: #6272a4; /* Comment */
+    border-color: #6272a4; /* Comment (Border) */
   }
 
+  /* Rounded Corners */
   .rounded-lg {
     border-radius: 0.5rem;
   }
 
-  .text-neutral-100 {
-    color: #f8f8f2; /* Foreground */
-  }
-
+  /* Font Size and Weight */
   .text-4xl {
     font-size: 2.25rem;
     line-height: 2.5rem;
@@ -70,6 +77,7 @@ const posts = (await getCollection("blog"))?.sort(
     font-weight: 700;
   }
 
+  /* Margin and Padding */
   .mb-4 {
     margin-bottom: 1rem;
   }
@@ -78,6 +86,11 @@ const posts = (await getCollection("blog"))?.sort(
     margin-bottom: 2rem;
   }
 
+  .p-8 {
+    padding: 2rem;
+  }
+
+  /* Width and Height */
   .w-screen {
     width: 100vw;
   }
@@ -90,19 +103,17 @@ const posts = (await getCollection("blog"))?.sort(
     max-width: 48rem;
   }
 
+  .w-full {
+    width: 100%;
+  }
+
+  /* Centering */
   .mx-auto {
     margin-left: auto;
     margin-right: auto;
   }
-
-  .p-8 {
-    padding: 2rem;
-  }
-
-  .w-full {
-    width: 100%;
-  }
 </style>
+
 
 <Layout
     title="Jordan Pryor - Blog"
