@@ -19,44 +19,49 @@ import BasicLayout from "../layouts/BasicLayout.astro";
 </script>
 
 <style>
+  /* General Background and Text Colors */
   body {
     background-color: #282a36; /* Background */
     color: #f8f8f2; /* Foreground */
   }
 
+  /* Links and Hover States */
   a {
-    color: #f8f8f2; /* Foreground */
-    background-color: #44475a; /* Current Line */
-    border-color: #6272a4; /* Comment */
+    color: #f8f8f2; /* Foreground (Text) */
+    background-color: #44475a; /* Current Line (Background) */
+    border-color: #6272a4; /* Comment (Border) */
     transition: background-color 0.3s ease;
   }
 
   a:hover {
-    background-color: #44475a; /* Current Line Hover */
-    border-color: #8be9fd; /* Cyan */
+    background-color: #bd93f9; /* Purple on Hover */
+    border-color: #8be9fd; /* Cyan (Border on Hover) */
   }
 
+  /* Text Colors */
   .text-white {
-    color: #f8f8f2; /* Foreground */
+    color: #f8f8f2; /* Foreground (Text) */
   }
 
+  /* Background Colors */
   .bg-neutral-900 {
     background-color: #282a36; /* Background */
   }
 
   .hover\:bg-neutral-800:hover {
-    background-color: #44475a; /* Current Line */
+    background-color: #44475a; /* Current Line (Hover) */
   }
 
+  /* Border Color */
   .border-neutral-600 {
-    border-color: #6272a4; /* Comment */
+    border-color: #6272a4; /* Comment (Border) */
   }
 
+  /* Rounded Corners */
   .rounded-lg {
     border-radius: 0.5rem;
   }
 </style>
-
 <BasicLayout
     title="Jordan Pryor - Current Projects"
     description="A network graph showing current projects"
