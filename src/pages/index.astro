@@ -40,18 +40,47 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
 </script>
 
 <style>
+  /* General Background and Text Colors */
   body {
     background-color: #282a36; /* Background */
-    color: #f8f8f2; /* Foreground */
+    color: #f8f8f2; /* Foreground (Text) */
   }
 
-  .card-title {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    color: #6272a4; /* Comment */
+  /* Card Titles and General Text */
+  .card-title,
+  .card p {
+    color: #f8f8f2; /* Foreground (Text) */
   }
 
+  /* Links and Hover States */
+  a {
+    color: #ff79c6; /* Pink */
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #bd93f9; /* Purple */
+  }
+
+  /* Card Backgrounds */
+  .card {
+    background-color: #44475a; /* Current Line */
+    color: #f8f8f2; /* Foreground (Text) */
+  }
+
+  /* Blog Card Titles */
+  .blog-card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #bd93f9; /* Purple */
+    transition: color 0.3s ease;
+  }
+
+  .blog-card-title:hover {
+    color: #ff79c6; /* Pink */
+  }
+
+  /* Network Graph Container Animation */
   .network-graph-container {
     animation: fadeInUp 1s ease-in-out;
   }
@@ -67,45 +96,16 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
     }
   }
 
-  .blog-card-title {
-    font-size: 1.25rem;
-    font-weight: bold;
-    color: #8be9fd; /* Cyan */
-    transition: color 0.3s ease;
-  }
-
-  .blog-card-title:hover {
-    color: #50fa7b; /* Green */
-  }
-
-  .card {
-    background-color: #44475a; /* Current Line */
-    color: #f8f8f2; /* Foreground */
-  }
-
-  a {
-    color: #ffb86c; /* Orange */
-    transition: color 0.3s ease;
-  }
-
-  a:hover {
-    color: #ff79c6; /* Pink */
-  }
-
-  p {
+  /* Footer and Small Text */
+  p.text-sm,
+  p.text-xs {
     color: #bd93f9; /* Purple */
   }
 
   h2 {
-    color: #ff5555; /* Red */
-  }
-
-  .card-title,
-  .card p {
-    color: #f1fa8c; /* Yellow */
+    color: #ff79c6; /* Pink */
   }
 </style>
-
 <Layout
     title="Jordan Pryor - Freelance Game/Software Developer"
     description="I'm a developer based in Nashville, passionate about making interesting and innovative games and software, or even improving on ideas or already developed software."
