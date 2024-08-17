@@ -8,13 +8,13 @@ const { rounded } = Astro.props;
 
 <style>
   .custom-btn {
-    color: #cad3f5; /* Text */
-    background-color: #24273a; /* Base */
-    border-color: #8aadf4; /* Blue */
+    color: #f8f8f2; /* Text (White) */
+    background-color: #282a36; /* Background (Dark) */
+    border-color: #bd93f9; /* Purple */
   }
 
   .custom-btn:hover {
-    color: #8aadf4; /* Blue */
+    color: #ff79c6; /* Pink */
   }
 
   .custom-btn:active {
@@ -23,14 +23,14 @@ const { rounded } = Astro.props;
   }
 
   .shadow-primary-500 {
-    --tw-shadow-color: #8aadf4; /* Blue */
+    --tw-shadow-color: #bd93f9; /* Purple */
   }
 </style>
 
 <button
-  class={`custom-btn text-xl max-h-[50px] shadow-custom shadow-primary-500 active:shadow-none active:translate-x-[3px] active:translate-y-[3px] text-gray-200 px-5 py-2 border border-primary-500 hover:text-primary-500 transition-colors duration-100 ease-in-out bg-gray-900 cursor-pointer ${
-    rounded ? "rounded-full" : "rounded-lg"
-  }`}
+    class={`custom-btn text-xl max-h-[50px] shadow-custom shadow-primary-500 active:shadow-none active:translate-x-[3px] active:translate-y-[3px] text-gray-200 px-5 py-2 border border-primary-500 hover:text-primary-500 transition-colors duration-100 ease-in-out bg-gray-900 cursor-pointer ${
+        rounded ? "rounded-full" : "rounded-lg"
+    }`}
 >
   <slot />
 </button>
