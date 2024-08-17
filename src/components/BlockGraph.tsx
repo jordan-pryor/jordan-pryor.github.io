@@ -3,11 +3,11 @@ import * as d3 from "d3";
 
 // Color palette
 const colors = {
-  noActivity: "#363a4f", // Background
-  lowActivity: "#8bd5ca", // Teal
-  mediumActivity: "#f5bde6", // Pink
-  highActivity: "#ed8796", // Red
-  veryHighActivity: "#f5a97f" // Peach
+    noActivity: "#282a36", // Dracula background equivalent
+    lowActivity: "#8be9fd", // Dracula teal
+    mediumActivity: "#ff79c6", // Dracula pink
+    highActivity: "#ff5555", // Dracula red
+    veryHighActivity: "#f1fa8c" // Dracula peach
 };
 
 const colorKey = [

@@ -4,13 +4,12 @@ import * as d3 from "d3";
 // Replace 'YOUR_GITHUB_USERNAME' with your actual GitHub username
 const githubUsername = "jordan-pryor";
 
-// Color palette
 const colors = {
-    nodeFill: "#ed8796", // Red
-    nodeStroke: "#c6a0f6", // Mauve
-    link: "#8bd5ca", // Teal
-    label: "#cad3f5", // Text
-    background: "#24273a", // Base
+    nodeFill: "#f5bde6", // Pink
+    nodeStroke: "#b9a0f2", // Light Purple
+    link: "#d3a6f0", // Light Lavender
+    label: "#e2e2e2", // Light Gray (Text)
+    background: "#1e2030", // Dark Background
 };
 
 // Function to calculate luminance
