@@ -69,7 +69,7 @@ or
 
 ## Authors ❤️
 
-- Jordan Pryor - https://github.com/yourusername
+- Jordan Pryor - https://github.com/jordan-pryor
 - Based on the template by Gianmarco - https://github.com/Ladvace
 
 ## Credits
