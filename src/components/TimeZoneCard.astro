@@ -4,57 +4,65 @@ import Card from "./Card/index.astro";
 ---
 
 <script>
-  import { onCleanup, onMount } from "solid-js";
-  import { formatTimeForCST } from "../lib/helpers";
+    import { onCleanup, onMount } from "solid-js";
+    import { formatTimeForCST } from "../lib/helpers";
 
-  let interval: ReturnType<typeof setInterval>;
+    let interval;
 
-  function updateClock() {
-    const timeDisplay = document.getElementById("timeDisplay");
-    const now = new Date();
+    function updateClock() {
+        const timeDisplay = document.getElementById("timeDisplay");
+        const now = new Date();
 
-    if (timeDisplay) {
-      timeDisplay.textContent = formatTimeForCST(now);
-      timeDisplay.setAttribute("datetime", now.toISOString());
+        if (timeDisplay) {
+            timeDisplay.textContent = formatTimeForCST(now);
+            timeDisplay.setAttribute("datetime", now.toISOString());
+        }
     }
-  }
 
-  onMount(() => {
-    interval = setInterval(updateClock, 1000);
-  });
+    onMount(() => {
+        updateClock();
+        interval = setInterval(updateClock, 1000);
+    });
 
-  onCleanup(() => {
-    clearInterval(interval);
-  });
+    onCleanup(() => {
+        clearInterval(interval);
+    });
 </script>
 
 <style>
-  .timeDisplay {
-    color: #f5bde6; /* Pink */
-  }
+#timeDisplay {
+    font-family: 'IBM Plex Mono', monospace;
+    color: #7dcfff; /* Cool neon blue accent */
+    font-weight: 500;
+    }
 
-  .card {
-    background-color: #1e2030; /* Dark Background */
-    border: 1px solid #8aadf4; /* Purple Accent */
-    border-radius: 0.5rem;
-  }
+.time-card {
+    background-color: #161b22; /* Terminal panel */
+    border: 1px solid #7dcfff; /* Neon border */
+    border-radius: 0.75rem;
+    box-shadow: 0 0 12px rgba(125, 207, 255, 0.15);
+    padding: 1rem;
+    }
 
-  .card-title {
-    color: #f8f8f2; /* Light Text */
-  }
+.card-title {
+    font-family: 'IBM Plex Mono', monospace;
+    color: #c9d1d9;
+    font-size: 0.875rem;
+    padding-bottom: 0.5rem;
+    }
 </style>
 
 <Card
-    colSpan="lg:col-span-2"
-    rowSpan="md:row-span-2"
-    title="Time zone"
-    class="card"
+colSpan="lg:col-span-2"
+rowSpan="md:row-span-2"
+title="Time zone"
+class="time-card"
 >
-  <time
-      datetime=""
-      id="timeDisplay"
-      class="text-2xl xl:text-5xl xl:whitespace-nowrap w-50 xl:w-100 h-[calc(100%-28px)] font-serif flex justify-center items-center timeDisplay"
-  >
-    {formatTimeForCST(getCurrentTimeInCST())}
-  </time>
+<time
+datetime=""
+id="timeDisplay"
+class="text-3xl xl:text-5xl font-mono flex justify-center items-center h-full"
+>
+{formatTimeForCST(getCurrentTimeInCST())}
+</time>
 </Card>
