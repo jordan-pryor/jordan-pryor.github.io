@@ -18,135 +18,137 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
 ---
 
 <script>
-  import { stagger, spring, timeline, type TimelineDefinition } from "motion";
-  import { loaderAnimation } from "../lib/constants";
-  const cards = document.querySelectorAll(".card");
+    import { stagger, spring, timeline, type TimelineDefinition } from "motion";
+    import { loaderAnimation } from "../lib/constants";
+    const cards = document.querySelectorAll(".card");
 
-  const sequence = [
-    loaderAnimation,
-    [
-      cards,
-      { y: ["40%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        delay: stagger(0.3),
-        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
-      },
-    ],
-  ];
+    const sequence = [
+        loaderAnimation,
+        [
+            cards,
+            { y: ["40%", "0%"], opacity: [0, 1] },
+            {
+                at: "-0.1",
+                duration: 0.4,
+                delay: stagger(0.3),
+                easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+            },
+        ],
+    ];
 
-  timeline(sequence as TimelineDefinition);
+    timeline(sequence as TimelineDefinition);
 </script>
 
 <style>
-  /* General Background and Text Colors */
-  body {
-    background-color: #282a36; /* Background */
-    color: #f8f8f2; /* Foreground (Text) */
-  }
+/* General Background, Typography, and Colors */
+body {
+    background-color: #161b22; /* Dark terminal background */
+    color: #c9d1d9;            /* Light text */
+    font-family: 'IBM Plex Mono', monospace;
+    }
 
-  /* Card Titles and General Text */
-  .card-title,
-  .card p {
-    color: #f8f8f2; /* Foreground (Text) */
-  }
+/* Card Titles and Content */
+.card-title,
+.card p {
+    color: #c9d1d9;
+    }
 
-  /* Links and Hover States */
-  a {
-    color: #ff79c6; /* Pink */
+/* Links and Interactive Elements */
+a {
+    color: #7dcfff; /* Neon blue */
     transition: color 0.3s ease;
-  }
+    }
 
-  a:hover {
-    color: #bd93f9; /* Purple */
-  }
+a:hover {
+    color: #58a6ff; /* Slightly brighter neon blue on hover */
+    }
 
-  /* Card Backgrounds */
-  .card {
-    background-color: #44475a; /* Current Line */
-    color: #f8f8f2; /* Foreground (Text) */
-  }
+/* Card Styling */
+.card {
+    background-color: #1e2030;      /* Slightly lighter than body for contrast */
+    color: #c9d1d9;
+    border: 1px solid #7dcfff;      /* Neon blue border */
+    border-radius: 0.75rem;
+    box-shadow: 0 0 12px rgba(125, 207, 255, 0.15);
+    }
 
-  /* Blog Card Titles */
-  .blog-card-title {
+/* Blog Card Titles */
+.blog-card-title {
     font-size: 1.25rem;
     font-weight: bold;
-    color: #bd93f9; /* Purple */
+    color: #7dcfff;
     transition: color 0.3s ease;
-  }
+    }
 
-  .blog-card-title:hover {
-    color: #ff79c6; /* Pink */
-  }
+.blog-card-title:hover {
+    color: #58a6ff;
+    }
 
-  /* Network Graph Container Animation */
-  .network-graph-container {
+/* Network Graph Container Animation */
+.network-graph-container {
     animation: fadeInUp 1s ease-in-out;
-  }
+    }
 
-  @keyframes fadeInUp {
+@keyframes fadeInUp {
     0% {
-      opacity: 0;
-      transform: translateY(20px);
+        opacity: 0;
+        transform: translateY(20px);
     }
     100% {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
+        }
     }
-  }
 
-  /* Footer and Small Text */
-  p.text-sm,
-  p.text-xs {
-    color: #bd93f9; /* Purple */
-  }
+/* Footer and Small Text */
+p.text-sm,
+p.text-xs {
+    color: #7dcfff;
+    }
 
-  h2 {
-    color: #ff79c6; /* Pink */
-  }
+h2 {
+    color: #7dcfff;
+    }
 </style>
+
 <Layout
-    title="Jordan Pryor - Freelance Game/Software Developer"
-    description="I'm a developer based in Nashville, passionate about making interesting and innovative games and software, or even improving on ideas or already developed software."
+title="Jordan Pryor - Freelance Game/Software Developer"
+description="I'm a developer based in Nashville, passionate about making interesting and innovative games and software, or even improving on ideas or already developed software."
 >
-  <main
-      class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
-  >
-    <IntroCard />
-    <AboutMe />
-    <ContactsCard />
-    <TimeZone />
-    <Now />
-    <Card
-        colSpan="md:col-span-1"
-        rowSpan="md:row-span-1"
-        title="Current Projects"
-        href="projects"
-        colorText="text-neutral-900"
-    >
-      <div class="h-full w-full absolute inset-0 -z-10 network-graph-container">
-        <NetworkGraph client:load />
-      </div>
-    </Card>
-    <Card
-        colSpan="md:col-span-1"
-        rowSpan="md:row-span-2 flex gap-4"
-        title="Blog"
-        href="/blog"
-    >
-      <div class="p-4">
-        <h2 class="blog-card-title">Latest Post: {latestPost.data.title}</h2>
-      </div>
-    </Card>
-    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
-      <p class="text-xs">
-        © 2024 · Crafted with ♥️ using <a
-          href="https://astro.build/"
-          target="_blank"
-          class="text-red-500">Astro</a
-      > by Gianmarco & Jordan.
-      </p>
-    </Card>
-  </main>
+<main
+class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-rows-8 lg:grid-cols-4 lg:gap-4 lg:max-h-[800px]"
+>
+<IntroCard />
+<AboutMe />
+<ContactsCard />
+<TimeZone />
+<Now />
+<Card
+colSpan="md:col-span-1"
+rowSpan="md:row-span-1"
+title="Current Projects"
+href="projects"
+colorText="text-neutral-900"
+>
+<div class="h-full w-full absolute inset-0 -z-10 network-graph-container">
+<NetworkGraph client:load />
+</div>
+</Card>
+<Card
+colSpan="md:col-span-1"
+rowSpan="md:row-span-2 flex gap-4"
+title="Blog"
+href="/blog"
+>
+<div class="p-4">
+<h2 class="blog-card-title">Latest Post: {latestPost.data.title}</h2>
+</div>
+</Card>
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
+<p class="text-xs">
+© 2024 · Crafted with ♥️ using
+<a href="https://astro.build/" target="_blank">Astro</a> by Gianmarco & Jordan.
+</p>
+</Card>
+</main>
 </Layout>
