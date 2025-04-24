@@ -8,7 +8,30 @@ const { title, body } = Astro.props;
 ---
 
 <>
-  {title && <h2 class="text-xl font-bold m-0 z-20 text-[#bd93f9]">{title}</h2>}
-  {body && <p class="m-0 font-light text-base text-[#f8f8f2]">{body}</p>}
+  {title && (
+      <h2 class="text-xl font-bold m-0 z-20 text-[#bd93f9] tracking-wide mb-1">
+        &gt; {title}<span class="blinking-cursor">_</span>
+      </h2>
+  )}
+  {body && (
+      <p class="m-0 font-light text-base text-[#f8f8f2] mb-2">
+        {body}
+      </p>
+  )}
   <slot />
 </>
+
+<style>
+  .blinking-cursor {
+    display: inline-block;
+    width: 0.75ch;
+    color: #aaffcc;
+    animation: blink 1s step-start infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+</style>
