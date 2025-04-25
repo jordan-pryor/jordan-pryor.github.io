@@ -10,9 +10,9 @@ const colors = {
     veryHighActivity: "#f1fa8c", // Soft yellow/peach
 };
 
-// Function to calculate the tile size and grid layout
-const tileSize = 100; // Size of each tile (in px)
-const numCols = 5; // Number of columns in the grid
+// Function to calculate tile size based on repo name length
+const baseTileWidth = 100; // Base width for a repo name length of 1
+const baseTileHeight = 100; // Fixed height for all tiles
 
 const githubUsername = "jordan-pryor"; // GitHub username for fetching repo data
 
@@ -41,8 +41,9 @@ const NetworkGraph = () => {
                     id: repo.name,
                     stars: repo.stargazers_count,
                     url: repo.html_url,
-                    col: i % numCols, // Column position in grid
-                    row: Math.floor(i / numCols), // Row position in grid
+                    col: i % 5, // Column position in grid
+                    row: Math.floor(i / 5), // Row position in grid
+                    nameLength: repo.name.length, // Length of repo name for dynamic sizing
                 }));
 
                 // Function to determine the color based on the repo activity (stars)
@@ -60,10 +61,10 @@ const NetworkGraph = () => {
                     .data(nodes)
                     .enter()
                     .append("rect")
-                    .attr("x", (d) => d.col * (tileSize + 10)) // Add spacing between tiles
-                    .attr("y", (d) => d.row * (tileSize + 10)) // Add spacing between tiles
-                    .attr("width", tileSize)
-                    .attr("height", tileSize)
+                    .attr("x", (d) => d.col * (baseTileWidth + 20)) // Column position with spacing
+                    .attr("y", (d) => d.row * (baseTileHeight + 20)) // Row position with spacing
+                    .attr("width", (d) => baseTileWidth + d.nameLength * 6) // Tile width based on name length
+                    .attr("height", baseTileHeight) // Fixed height
                     .attr("fill", (d) => getColorForActivity(d.stars))
                     .attr("stroke", "#fff")
                     .attr("stroke-width", 1)
@@ -85,8 +86,8 @@ const NetworkGraph = () => {
                     .enter()
                     .append("text")
                     .attr("class", "repo-label")
-                    .attr("x", (d) => d.col * (tileSize + 10) + tileSize / 2)
-                    .attr("y", (d) => d.row * (tileSize + 10) + tileSize / 2)
+                    .attr("x", (d) => d.col * (baseTileWidth + 20) + (baseTileWidth + d.nameLength * 6) / 2)
+                    .attr("y", (d) => d.row * (baseTileHeight + 20) + baseTileHeight / 2)
                     .attr("text-anchor", "middle")
                     .attr("font-size", "12px")
                     .attr("fill", "#fff")
