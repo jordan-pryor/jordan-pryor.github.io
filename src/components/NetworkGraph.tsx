@@ -57,6 +57,18 @@ const NetworkGraph = () => {
                     return colors.noActivity;
                 };
 
+                // Create a link between nodes
+                const links = nodes.map((node, index) => ({
+                    source: node,
+                    target: nodes[(index + 1) % nodes.length] // Link each node to the next
+                }));
+
+                // Create the force simulation
+                const simulation = d3.forceSimulation(nodes)
+                    .force("link", d3.forceLink(links).id((d: any) => d.id).distance(100))
+                    .force("charge", d3.forceManyBody().strength(-100))
+                    .force("center", d3.forceCenter(width / 2, height / 2));
+
                 // Add hexagon shapes
                 svg.selectAll("polygon")
                     .data(nodes)
@@ -101,31 +113,30 @@ const NetworkGraph = () => {
                     .attr("fill", "#fff")
                     .text(d => d.id);
 
-                // Connect hexagons with lines to create a spider-web effect
-                svg.selectAll("line")
-                    .data(nodes)
+                // Add links to connect the hexagons (Spider-web effect)
+                const link = svg.selectAll(".link")
+                    .data(links)
                     .enter()
                     .append("line")
-                    .attr("x1", (d, i) => {
-                        const [x1, y1] = hexToPixel(d.q, d.r);
-                        return x1 + width / 2;
-                    })
-                    .attr("y1", (d, i) => {
-                        const [x1, y1] = hexToPixel(d.q, d.r);
-                        return y1 + height / 2;
-                    })
-                    .attr("x2", (d, i, nodes) => {
-                        const nextNode = nodes[(i + 1) % nodes.length];
-                        const [x2, y2] = hexToPixel(nextNode.q, nextNode.r);
-                        return x2 + width / 2;
-                    })
-                    .attr("y2", (d, i, nodes) => {
-                        const nextNode = nodes[(i + 1) % nodes.length];
-                        const [x2, y2] = hexToPixel(nextNode.q, nextNode.r);
-                        return y2 + height / 2;
-                    })
+                    .attr("class", "link")
                     .attr("stroke", "#fff")
                     .attr("stroke-width", 1);
+
+                // Simulate movement of nodes and links
+                simulation.on("tick", () => {
+                    svg.selectAll("polygon")
+                        .attr("transform", (d) => {
+                            const [x, y] = hexToPixel(d.q, d.r);
+                            return `translate(${d.x}, ${d.y})`;
+                        });
+
+                    link
+                        .attr("x1", (d: any) => d.source.x)
+                        .attr("y1", (d: any) => d.source.y)
+                        .attr("x2", (d: any) => d.target.x)
+                        .attr("y2", (d: any) => d.target.y);
+                });
+
             })
             .catch(error => console.error('Error fetching GitHub repos:', error));
     });
