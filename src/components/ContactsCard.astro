@@ -7,26 +7,31 @@ import { LINKS } from "../lib/constants";
     padding: 1rem;
     font-family: 'Fira Code', monospace;
     color: #e5e5e5;
-    height: 415px; /* Set the height */
-    width: 369px; /* Set the width */
-    box-sizing: border-box; /* Ensure padding doesn't affect the size */
+    height: 415px;
+    width: 369px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .card-header {
-    color: #bd5eff; /* Header pink/purple */
+    color: #bd5eff;
     font-size: 1rem;
     font-weight: bold;
+    align-self: flex-start; /* Top-left */
+    margin-bottom: 0.5rem;
   }
 
   .label {
-    color: #50fa7b; /* Contact detail label green */
+    color: #50fa7b;
     font-size: 0.75rem;
     text-transform: uppercase;
     margin-bottom: 0.25rem;
   }
 
   .info {
-    color: #e5e5e5; /* Body text */
+    color: #e5e5e5;
     font-size: 0.875rem;
   }
 
@@ -43,31 +48,43 @@ import { LINKS } from "../lib/constants";
     border-top: 1px solid #2e2e3a;
     margin: 0.75rem 0;
   }
+
+  .blinking-cursor {
+    animation: blink 1s step-start infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
 </style>
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
-  <div class="h-full flex flex-col contact-card">
-    <header class="flex items-center">
+  <div class="contact-card">
+    <header>
       <h1 class="card-header">&gt; Let's start working together<span class="blinking-cursor">_</span></h1>
     </header>
 
-    <div class="divider" />
+    <div>
+      <div class="divider" />
 
-    <address class="flex flex-col gap-1 not-italic">
-      <p class="label">Contact Details</p>
-      <p class="info">jordanpryor.personal@outlook.com</p>
-      <p class="info">Nashville, TN</p>
-    </address>
+      <address class="flex flex-col gap-1 not-italic">
+        <p class="label">Contact Details</p>
+        <p class="info">jordanpryor.personal@outlook.com</p>
+        <p class="info">Nashville, TN</p>
+      </address>
 
-    <div class="divider" />
+      <div class="divider" />
 
-    <div class="flex flex-col w-fit">
-      <p class="label">Socials</p>
-      <ul class="flex flex-col gap-1">
-        <li><a class="social-link" href={LINKS.linkedin} target="_blank">LinkedIn</a></li>
-        <li><a class="social-link" href={LINKS.github} target="_blank">GitHub</a></li>
-        <li><a class="social-link" href={LINKS.discord} target="_blank">Discord</a></li>
-      </ul>
+      <div class="flex flex-col w-fit">
+        <p class="label">Socials</p>
+        <ul class="flex flex-col gap-1">
+          <li><a class="social-link" href={LINKS.linkedin} target="_blank">LinkedIn</a></li>
+          <li><a class="social-link" href={LINKS.github} target="_blank">GitHub</a></li>
+          <li><a class="social-link" href={LINKS.discord} target="_blank">Discord</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </Card>
