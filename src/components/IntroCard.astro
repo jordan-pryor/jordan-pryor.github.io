@@ -9,34 +9,30 @@ import { Image } from "astro:assets";
 
 <style>
   .terminal-card {
-    position: relative;
-    background-color: #0d0d0d;
-    border: 1px solid #b276f4;
+    background-color: #0d0d0d; /* Jet black terminal background */
+    border: 1px solid #b276f4; /* Neon violet border */
     border-radius: 0.75rem;
-    padding: 1rem;
+    padding: 1.25rem;
     font-family: 'IBM Plex Mono', monospace;
     color: #f0f0f0;
     box-shadow: 0 0 18px rgba(178, 118, 244, 0.12);
-    box-sizing: border-box;
-    overflow: hidden;
   }
 
   .welcome-text {
-    color: #b276f4;
+    color: #b276f4; /* Soft violet */
     font-size: 0.75rem;
-    margin: 0 0 0.25rem 0;
+    margin-bottom: 0.25rem;
   }
 
   .intro-text {
     color: #f0f0f0;
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.6;
     font-weight: 300;
-    margin: 0;
   }
 
   .bold-text {
-    color: #ff4eb8;
+    color: #ff4eb8; /* Bright pink highlight */
     font-weight: 600;
   }
 
@@ -46,96 +42,55 @@ import { Image } from "astro:assets";
   }
 
   .button:hover .button-icon {
-    color: #ff4eb8;
+    color: #ff4eb8; /* Neon pink on hover */
   }
 
   .terminal-header {
     color: #b276f4;
     font-size: 0.75rem;
-    margin-bottom: 0.5rem;
     display: block;
-  }
-
-  .intro-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .intro-content {
-    max-width: 600px;
-    z-index: 2;
-  }
-
-  .button-group {
-    display: flex;
-    gap: 1rem;
-  }
-
-  .intro-logo-wrapper {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 387px;
-    height: 302px;
-    opacity: 0.9;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .logo-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 0 18px rgba(178, 118, 244, 0.5));
-  }
-
-  @media (max-width: 768px) {
-    .intro-logo-wrapper {
-      position: absolute;
-      bottom: -20px; /* Adjust as needed to match how much the logo dips below the card */
-      right: -20px;  /* Adjust to pull the logo slightly out to the right like in the screenshot */
-      width: 387px;
-      height: 302px;
-      opacity: 0.9;
-      pointer-events: none;
-      user-select: none;
-      z-index: 1; /* Ensures it doesn't overlap important UI */
-    }
+    margin-bottom: 0.5rem;
   }
 </style>
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" class="terminal-card">
-  <span class="terminal-header">&gt; Welcome.sh</span>
-  <div class="intro-layout">
-    <div class="intro-content">
-      <div>
-        <h6 class="welcome-text">welcome</h6>
-        <p class="intro-text">
-          Hello 👋, I'm <b class="bold-text">Jordan N. Pryor</b>, a Developer with expertise in game development, game engine creation, and software design. I specialize in crafting innovative solutions that deliver engaging and immersive experiences.
+  <span class="terminal-header">&gt; welcome.sh</span>
+  <div class="flex w-full h-full">
+    <div class="flex flex-col justify-between md:max-h-[300px] gap-4">
+      <div class="flex flex-col h-full">
+        <h6 class="welcome-text m-0">welcome</h6>
+        <p class="intro-text m-0">
+          Hello👋, I'm <b class="bold-text">Jordan N. Pryor</b>, a Developer with expertise in game development, game engine creation, and software design. I specialize in crafting innovative solutions that deliver engaging and immersive experiences.
         </p>
       </div>
-      <div class="button-group">
-        <a href={LINKS.github} aria-label="GitHub" target="_blank">
-          <Button><Icon name="ri:github-fill" class="h-6 button-icon" /><span class="sr-only">GitHub</span></Button>
+      <div class="flex gap-4">
+        <a href={LINKS.github} aria-label="github profile" target="_blank">
+          <Button aria-label="github profile">
+            <Icon name="ri:github-fill" class="h-6 button-icon" />
+            <span class="sr-only">GitHub Profile</span>
+          </Button>
         </a>
-        <a href={LINKS.linkedin} aria-label="LinkedIn" target="_blank">
-          <Button><Icon name="ri:linkedin-box-fill" class="h-6 button-icon" /><span class="sr-only">LinkedIn</span></Button>
+        <a href={LINKS.linkedin} aria-label="linkedin profile" target="_blank">
+          <Button aria-label="linkedin profile">
+            <Icon name="ri:linkedin-box-fill" class="h-6 button-icon" />
+            <span class="sr-only">Linkedin Profile</span>
+          </Button>
         </a>
         <Tooltip client:visible>
-          <Button aria-label="Easter Egg"><Icon name="ri:emotion-laugh-line" class="h-6 button-icon" /><span class="sr-only">Easter Egg</span></Button>
+          <Button aria-label="easter egg btn">
+            <Icon name="ri:emotion-laugh-line" class="h-6 button-icon" />
+            <span class="sr-only">Easter egg button</span>
+          </Button>
         </Tooltip>
       </div>
     </div>
-  </div>
 
-  <div class="intro-logo-wrapper">
     <Image
+        width="300"
+        height="300"
         src="/logo.png"
-        alt="Jordan Pryor logo"
-        width="387"
-        height="302"
-        class="logo-image"
+        class="w-auto max-h-[300px] select-none absolute right-[-110px] bottom-[-20px] z-[-1] opacity-50 md:opacity-100 md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none"
+        alt="memoji of jordan"
     />
   </div>
 </Card>
