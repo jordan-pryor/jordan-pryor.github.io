@@ -92,8 +92,15 @@ import { Image } from "astro:assets";
 
   @media (max-width: 768px) {
     .intro-logo-wrapper {
-      width: 240px;
-      height: auto;
+      position: absolute;
+      bottom: -20px; /* Adjust as needed to match how much the logo dips below the card */
+      right: -20px;  /* Adjust to pull the logo slightly out to the right like in the screenshot */
+      width: 387px;
+      height: 302px;
+      opacity: 0.9;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1; /* Ensures it doesn't overlap important UI */
     }
   }
 </style>
