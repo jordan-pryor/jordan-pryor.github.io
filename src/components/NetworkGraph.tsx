@@ -4,17 +4,20 @@ import * as d3 from "d3";
 const githubUsername = "jordan-pryor";
 
 const colors = {
-    tileFill: "#f5bde6",
     tileStroke: "#b9a0f2",
-    text: "#e2e2e2",
     background: "#1e2030",
+    text: "#ffffff", // better contrast
+    activityColors: d3.scaleLinear<string>()
+        .domain([0, 50])
+        .range(["#8aadf4", "#f5bde6"]),
 };
 
-const hexRadius = 40; // Adjust for size of tiles
+const hexRadius = 40;
 
 const hexToPixel = (q: number, r: number) => {
-    const x = hexRadius * Math.sqrt(3) * (q + r / 2);
-    const y = hexRadius * 1.5 * r;
+    const spacing = 1.25; // adjust spacing between tiles
+    const x = hexRadius * Math.sqrt(3) * (q + r / 2) * spacing;
+    const y = hexRadius * 1.5 * r * spacing;
     return [x, y];
 };
 
@@ -39,6 +42,7 @@ const NetworkGraph = () => {
                 const nodes = repos.map((repo: any, i: number) => ({
                     id: repo.name,
                     url: repo.html_url,
+                    stars: repo.stargazers_count,
                     q: (i % 5) - 2,
                     r: Math.floor(i / 5) - 1,
                 }));
@@ -63,27 +67,27 @@ const NetworkGraph = () => {
                         const [x, y] = hexToPixel(d.q, d.r);
                         return `translate(${x}, ${y})`;
                     })
-                    .attr("fill", colors.tileFill)
+                    .attr("fill", d => colors.activityColors(d.stars))
                     .attr("stroke", colors.tileStroke)
                     .attr("stroke-width", 1.5)
                     .on("mouseover", function () {
                         d3.select(this).attr("fill", "#f5a97f");
                     })
-                    .on("mouseout", function () {
-                        d3.select(this).attr("fill", colors.tileFill);
+                    .on("mouseout", function (event, d: any) {
+                        d3.select(this).attr("fill", colors.activityColors(d.stars));
                     })
                     .on("click", (event, d) => {
                         window.open(d.url, "_blank");
                     });
 
-                // Add labels
+                // Add labels *above* hex tiles
                 tileGroup.selectAll("text")
                     .data(nodes)
                     .enter()
                     .append("text")
                     .attr("transform", d => {
                         const [x, y] = hexToPixel(d.q, d.r);
-                        return `translate(${x}, ${y + 4})`;
+                        return `translate(${x}, ${y - hexRadius - 8})`;
                     })
                     .attr("text-anchor", "middle")
                     .attr("font-size", "10px")
