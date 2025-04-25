@@ -1,27 +1,26 @@
 import { onMount } from "solid-js";
 import * as d3 from "d3";
 
-const githubUsername = "jordan-pryor";
-
+// Color palette for repo activity
 const colors = {
-    tileStroke: "#b9a0f2",
-    background: "#1e2030",
-    text: "#ffffff", // better contrast
-    activityColors: d3.scaleLinear<string>()
-        .domain([0, 50])
-        .range(["#8aadf4", "#f5bde6"]),
+    noActivity: "#282a36", // Base dark background
+    lowActivity: "#8be9fd", // Soft light blue
+    mediumActivity: "#ff79c6", // Soft pink
+    highActivity: "#ff5555", // Bright red
+    veryHighActivity: "#f1fa8c", // Soft yellow/peach
 };
 
-const hexRadius = 40;
-
+// Function to calculate hexagon center coordinates
 const hexToPixel = (q: number, r: number) => {
-    const spacing = 1.25; // adjust spacing between tiles
-    const x = hexRadius * Math.sqrt(3) * (q + r / 2) * spacing;
-    const y = hexRadius * 1.5 * r * spacing;
+    const hexRadius = 30; // size of the hexagon
+    const x = hexRadius * Math.sqrt(3) * (q + r / 2);
+    const y = hexRadius * 1.5 * r;
     return [x, y];
 };
 
-const NetworkGraph = () => {
+const githubUsername = "jordan-pryor"; // GitHub username for fetching repo data
+
+const SpiderWebGraph = () => {
     let graphContainer: HTMLDivElement | undefined;
 
     onMount(() => {
@@ -34,69 +33,103 @@ const NetworkGraph = () => {
             .append("svg")
             .attr("width", width)
             .attr("height", height)
-            .style("background-color", colors.background);
+            .style("background-color", "#24273a"); // Dark background for the canvas
 
+        // Fetch repo data from GitHub API
         fetch(`https://api.github.com/users/${githubUsername}/repos`)
             .then(res => res.json())
             .then(repos => {
+                // Nodes representing each repository
                 const nodes = repos.map((repo: any, i: number) => ({
                     id: repo.name,
-                    url: repo.html_url,
                     stars: repo.stargazers_count,
-                    q: (i % 5) - 2,
-                    r: Math.floor(i / 5) - 1,
+                    url: repo.html_url,
+                    q: i % 10 - 5,  // Positioning on the x-axis
+                    r: Math.floor(i / 10) - 5, // Positioning on the y-axis
                 }));
 
-                const tileGroup = svg.append("g")
-                    .attr("transform", `translate(${width / 2}, ${height / 2})`);
+                // Function to determine the color based on the repo activity (stars)
+                const getColorForActivity = (stars: number) => {
+                    if (stars > 50) return colors.veryHighActivity;
+                    if (stars > 30) return colors.highActivity;
+                    if (stars > 10) return colors.mediumActivity;
+                    if (stars > 0) return colors.lowActivity;
+                    return colors.noActivity;
+                };
 
-                // Draw hex tiles
-                tileGroup.selectAll("polygon")
+                // Add hexagon shapes
+                svg.selectAll("polygon")
                     .data(nodes)
                     .enter()
                     .append("polygon")
-                    .attr("points", () => {
+                    .attr("points", (d) => {
                         return d3.range(6).map(i => {
                             const angle = Math.PI / 3 * i;
-                            const x = hexRadius * Math.cos(angle);
-                            const y = hexRadius * Math.sin(angle);
+                            const x = 30 * Math.cos(angle);
+                            const y = 30 * Math.sin(angle);
                             return `${x},${y}`;
                         }).join(" ");
                     })
-                    .attr("transform", d => {
+                    .attr("transform", (d) => {
                         const [x, y] = hexToPixel(d.q, d.r);
-                        return `translate(${x}, ${y})`;
+                        return `translate(${x + width / 2}, ${y + height / 2})`;
                     })
-                    .attr("fill", d => colors.activityColors(d.stars))
-                    .attr("stroke", colors.tileStroke)
+                    .attr("fill", (d) => getColorForActivity(d.stars))
+                    .attr("stroke", "#fff")
                     .attr("stroke-width", 1.5)
                     .on("mouseover", function () {
-                        d3.select(this).attr("fill", "#f5a97f");
+                        d3.select(this).attr("fill", "#f5bde6"); // Highlight color on hover
                     })
-                    .on("mouseout", function (event, d: any) {
-                        d3.select(this).attr("fill", colors.activityColors(d.stars));
+                    .on("mouseout", function (event, d) {
+                        d3.select(this).attr("fill", getColorForActivity(d.stars));
                     })
                     .on("click", (event, d) => {
                         window.open(d.url, "_blank");
                     });
 
-                // Add labels *above* hex tiles
-                tileGroup.selectAll("text")
+                // Add labels (repo names) above the hexagons
+                svg.selectAll("text")
                     .data(nodes)
                     .enter()
                     .append("text")
-                    .attr("transform", d => {
+                    .attr("transform", (d) => {
                         const [x, y] = hexToPixel(d.q, d.r);
-                        return `translate(${x}, ${y - hexRadius - 8})`;
+                        return `translate(${x + width / 2}, ${y + height / 2 - 40})`; // Adjust position above the hexagon
                     })
                     .attr("text-anchor", "middle")
                     .attr("font-size", "10px")
-                    .attr("fill", colors.text)
+                    .attr("fill", "#fff")
                     .text(d => d.id);
-            });
+
+                // Connect hexagons with lines to create a spider-web effect
+                svg.selectAll("line")
+                    .data(nodes)
+                    .enter()
+                    .append("line")
+                    .attr("x1", (d, i) => {
+                        const [x1, y1] = hexToPixel(d.q, d.r);
+                        return x1 + width / 2;
+                    })
+                    .attr("y1", (d, i) => {
+                        const [x1, y1] = hexToPixel(d.q, d.r);
+                        return y1 + height / 2;
+                    })
+                    .attr("x2", (d, i, nodes) => {
+                        const nextNode = nodes[(i + 1) % nodes.length];
+                        const [x2, y2] = hexToPixel(nextNode.q, nextNode.r);
+                        return x2 + width / 2;
+                    })
+                    .attr("y2", (d, i, nodes) => {
+                        const nextNode = nodes[(i + 1) % nodes.length];
+                        const [x2, y2] = hexToPixel(nextNode.q, nextNode.r);
+                        return y2 + height / 2;
+                    })
+                    .attr("stroke", "#fff")
+                    .attr("stroke-width", 1);
+            })
+            .catch(error => console.error('Error fetching GitHub repos:', error));
     });
 
     return <div ref={graphContainer} style={{ width: "100%", height: "auto" }}></div>;
 };
-
 export default NetworkGraph;
