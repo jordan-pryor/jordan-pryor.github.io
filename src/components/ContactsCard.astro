@@ -2,43 +2,31 @@
 import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
 ---
+
 <style>
   .contact-card {
     height: 415px;
     width: 369px;
-    box-sizing: border-box;
-    padding: 1rem;
-    font-family: 'Fira Code', monospace;
-    color: #e5e5e5;
-
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    gap: 1.25rem;
+    justify-content: space-between;
+    font-family: 'Fira Code', monospace;
+    color: #e5e5e5;
   }
 
   .card-header {
     color: #bd5eff;
     font-size: 1rem;
     font-weight: bold;
-    align-self: flex-start; /* Keep top-left bias */
-    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
   }
 
-  .section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .blinking-cursor {
+    animation: blink 1s step-start infinite;
   }
 
-  address, .socials {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.25rem;
+  @keyframes blink {
+    50% { opacity: 0; }
   }
 
   .label {
@@ -64,45 +52,40 @@ import { LINKS } from "../lib/constants";
 
   .divider {
     border-top: 1px solid #2e2e3a;
-    width: 100%;
+    margin: 0.75rem 0;
   }
 
-  .blinking-cursor {
-    animation: blink 1s step-start infinite;
-  }
-
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 </style>
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
   <div class="contact-card">
-    <header class="card-header">
-      &gt; Let's start working together<span class="blinking-cursor">_</span>
+    <header>
+      <h1 class="card-header">&gt; Let's start working together<span class="blinking-cursor">_</span></h1>
     </header>
 
-    <div class="divider" />
-
-    <div class="section">
-      <address class="not-italic">
+    <div>
+      <div class="section">
         <p class="label">Contact Details</p>
         <p class="info">jordanpryor.personal@outlook.com</p>
         <p class="info">Nashville, TN</p>
-      </address>
-    </div>
+      </div>
 
-    <div class="divider" />
+      <div class="divider"></div>
 
-    <div class="section socials">
-      <p class="label">Socials</p>
-      <ul class="flex flex-col gap-1">
-        <li><a class="social-link" href={LINKS.linkedin} target="_blank">LinkedIn</a></li>
-        <li><a class="social-link" href={LINKS.github} target="_blank">GitHub</a></li>
-        <li><a class="social-link" href={LINKS.discord} target="_blank">Discord</a></li>
-      </ul>
+      <div class="section">
+        <p class="label">Socials</p>
+        <ul class="section">
+          <li><a class="social-link" href={LINKS.linkedin} target="_blank">LinkedIn</a></li>
+          <li><a class="social-link" href={LINKS.github} target="_blank">GitHub</a></li>
+          <li><a class="social-link" href={LINKS.discord} target="_blank">Discord</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </Card>
+
