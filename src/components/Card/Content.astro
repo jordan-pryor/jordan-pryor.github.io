@@ -9,12 +9,12 @@ const { title, body } = Astro.props;
 
 <>
   {title && (
-      <h2 class="text-xl font-bold m-0 z-20 text-[#bd93f9] tracking-wide mb-1 text-[clamp(1rem,5vw+1rem,2rem)]">
+      <h2 class="text-xl font-bold m-0 z-20 text-[#cd00cd] tracking-wide mb-1 text-[clamp(1rem,5vw+1rem,2rem)]">
         &gt; {title}<span class="blinking-cursor">_</span>
       </h2>
   )}
   {body && (
-      <p class="m-0 font-light text-base text-[#f8f8f2] mb-2 text-[clamp(0.875rem,3vw+0.75rem,1.125rem)]">
+      <p class="m-0 font-light text-base text-[#eeeeec] mb-2 text-[clamp(0.875rem,3vw+0.75rem,1.125rem)]">
         {body}
       </p>
   )}
@@ -25,7 +25,7 @@ const { title, body } = Astro.props;
   .blinking-cursor {
     display: inline-block;
     width: 0.75ch;
-    color: #aaffcc;
+    color: #aaffcc; /* You can change this to another color if desired */
     animation: blink 1s step-start infinite;
   }
 

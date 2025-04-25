@@ -3,53 +3,53 @@ import { Icon } from "astro-icon/components";
 import Content from "./Content.astro";
 
 interface Props {
-        title?: string;
-        body?: string;
-        colSpan?: string;
-        rowSpan?: string;
-        href?: string;
-        accent?: "pink" | "purple" | "red" | "mint";
-        height?: string;
-        width?: string;
+    title?: string;
+    body?: string;
+    colSpan?: string;
+    rowSpan?: string;
+    href?: string;
+    accent?: "pink" | "purple" | "red" | "mint";
+    height?: string;
+    width?: string;
 }
 
 const {
-        title,
-        body,
-        colSpan,
-        rowSpan,
-        href,
-        accent = "pink",
-        height,
-        width,
+    title,
+    body,
+    colSpan,
+    rowSpan,
+    href,
+    accent = "pink",
+    height,
+    width,
 } = Astro.props;
 
 const colorMap = {
-        pink: "border-pink-500 text-pink-400 shadow-pink-500/40",
-        purple: "border-purple-500 text-purple-400 shadow-purple-500/40",
-        red: "border-red-500 text-red-400 shadow-red-500/40",
-        mint: "border-teal-400 text-teal-300 shadow-teal-400/40",
+    pink: "border-[#cd00cd] text-[#cd00cd] shadow-[#cd00cd]/40",
+    purple: "border-[#cd00cd] text-[#cd00cd] shadow-[#cd00cd]/40", // You can adjust if you want to use a specific shade for purple
+    red: "border-[#cd0000] text-[#cd0000] shadow-[#cd0000]/40",
+    mint: "border-[#00cdcd] text-[#00cdcd] shadow-[#00cdcd]/40",
 };
 ---
 
 <div
-    class={`rounded-xl border bg-[#0d0d0d] font-mono p-5 flex flex-col justify-start transition-all duration-200 ease-in-out hover:shadow-[0_0_20px] hover:scale-[1.01] ${colorMap[accent]} ${
-        height || "h-auto"
-    } ${width || "w-full"} ${colSpan || "md:col-span-2"} ${rowSpan || ""}`}
+        class={`rounded-xl border bg-[#111416] font-mono p-5 flex flex-col justify-start transition-all duration-200 ease-in-out hover:shadow-[0_0_20px] hover:scale-[1.01] ${colorMap[accent]} ${
+            height || "h-auto"
+        } ${width || "w-full"} ${colSpan || "md:col-span-2"} ${rowSpan || ""}`}
 >
-        {href ? (
+    {href ? (
             <a href={href} class="w-full h-full block relative group">
-                    <Icon
+                <Icon
                         name="ri:arrow-right-up-line"
                         class="absolute top-3 right-3 h-5 w-5 group-hover:text-[#bd93f9] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-150"
-                    />
-                    <Content title={title} body={body}>
-                            <slot />
-                    </Content>
-            </a>
-        ) : (
-            <Content title={title} body={body}>
+                />
+                <Content title={title} body={body}>
                     <slot />
+                </Content>
+            </a>
+    ) : (
+            <Content title={title} body={body}>
+                <slot />
             </Content>
-        )}
+    )}
 </div>
