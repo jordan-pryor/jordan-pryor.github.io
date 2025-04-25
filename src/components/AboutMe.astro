@@ -9,17 +9,11 @@ import Card from "./Card/index.astro";
     border-radius: 0.75rem;
     font-family: 'IBM Plex Mono', monospace;
     color: #d9d9d9;
-    padding: 1rem;
+    padding: 0.75rem; /* slightly reduced padding */
     box-shadow: 0 0 18px rgba(178, 118, 244, 0.15);
     overflow: hidden;
-    max-height: 100%;
-  }
-
-  .about-me-title {
-    color: #ff4eb8;
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+    height: 100%;
   }
 
   .about-me-text {
@@ -29,6 +23,7 @@ import Card from "./Card/index.astro";
     word-wrap: break-word;
     overflow-wrap: break-word;
     max-width: 100%;
+    box-sizing: border-box;
   }
 
   .about-me-list {
