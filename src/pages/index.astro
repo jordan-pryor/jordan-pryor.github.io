@@ -114,6 +114,37 @@ p.text-xs {
 h2 {
     color: #7dcfff;
     }
+.transition-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background for transition effect */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    }
+
+.terminal-animation {
+    font-family: 'Courier New', monospace;
+    color: #7dcfff;
+    text-align: center;
+    animation: terminalEffect 3s infinite step-start;
+    }
+
+@keyframes terminalEffect {
+    0% {
+        content: "Loading Projects...";
+        }
+    50% {
+        content: ">";
+        }
+    100% {
+        content: "Loading Projects...";
+        }
+    }
 </style>
 
 <Layout
@@ -133,11 +164,14 @@ class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-ful
 colSpan="lg:col-span-2"
 rowSpan="lg:row-span-2"
 title="Current Projects"
-href="projects"
+href="https://github.com/jordan-pryor"
 colorText="text-neutral-900"
 >
-<div class="h-full w-full absolute inset-0 -z-10 network-graph-container">
-<NetworkGraph client:load />
+<div class="h-full w-full absolute inset-0 -z-10 transition-container">
+<!-- Animation for terminal-like transition -->
+<div class="terminal-animation">
+<span class="text-xl">Loading Projects...</span>
+</div>
 </div>
 </Card>
 
