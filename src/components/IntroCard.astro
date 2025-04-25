@@ -9,60 +9,71 @@ import { Image } from "astro:assets";
 
 <style>
   .terminal-card {
-    background-color: #0d0d0d; /* Jet black terminal background */
-    border: 1px solid #b276f4; /* Neon violet border */
+    background-color: #0b0b0f; /* Deep black-blue terminal tone */
+    border: 1px solid #c084fc; /* Neon lavender */
     border-radius: 0.75rem;
     padding: 1.25rem;
     font-family: 'IBM Plex Mono', monospace;
-    color: #f0f0f0;
-    box-shadow: 0 0 18px rgba(178, 118, 244, 0.12);
+    color: #f8f8f2; /* Softer white */
+    box-shadow: 0 0 22px rgba(192, 132, 252, 0.15);
   }
+
   .card-title {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #c792ea; /* Match this to your other titles if different */
+    color: #dcb9ff; /* Muted pastel violet */
     font-family: 'IBM Plex Mono', monospace;
     margin-bottom: 0.5rem;
   }
+
   .welcome-text {
-    color: #b276f4; /* Soft violet */
+    color: #9f7aea; /* Lighter violet */
     font-size: 0.75rem;
     margin-bottom: 0.25rem;
   }
+
   .intro-text {
-    color: #f0f0f0;
+    color: #eeeeee; /* High contrast but not pure white */
     font-size: 1.125rem;
     line-height: 1.6;
     font-weight: 300;
   }
 
   .bold-text {
-    color: #ff4eb8; /* Bright pink highlight */
+    color: #ff6ec7; /* Vibrant hot pink */
     font-weight: 600;
   }
 
   .button-icon {
-    color: #ffffff;
+    color: #e0e0e0;
     transition: color 0.2s ease;
   }
 
   .button:hover .button-icon {
-    color: #ff4eb8; /* Neon pink on hover */
+    color: #ff6ec7; /* Matches bold-text for hover */
   }
 
   .terminal-header {
-    color: #b276f4;
+    color: #c084fc;
     font-size: 0.75rem;
     display: block;
     margin-bottom: 0.5rem;
   }
+
   .blinking-cursor {
     display: inline-block;
     width: 0.75ch;
-    color: #aaffcc;
+    color: #7fffd4; /* Aqua glow */
     animation: blink 1s step-start infinite;
   }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
 </style>
+
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" class="terminal-card">
   <h2 class="card-title">&gt; Intro<span class="blinking-cursor">_</span></h2>
