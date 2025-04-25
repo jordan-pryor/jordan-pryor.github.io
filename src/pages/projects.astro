@@ -5,75 +5,105 @@ import BasicLayout from "../layouts/BasicLayout.astro";
 ---
 
 <script>
-  import { timeline, type TimelineDefinition } from "motion";
+    import { timeline, type TimelineDefinition } from "motion";
 
-  const sequence = [
-    [
-      ".loaderRef",
-      { opacity: [1, 0], pointerEvents: "none" },
-      { easing: "ease-out" },
-    ],
-  ];
+    const sequence = [
+        [
+            ".loaderRef",
+            { opacity: [1, 0], pointerEvents: "none" },
+            { easing: "ease-out" },
+        ],
+    ];
 
-  timeline(sequence as TimelineDefinition);
+    timeline(sequence as TimelineDefinition);
 </script>
 
 <style>
-  /* General Background and Text Colors */
-  body {
+/* General Background and Text Colors */
+body {
     background-color: #282a36; /* Background */
     color: #f8f8f2; /* Foreground (Text) */
-  }
+    }
 
-  /* Links and Hover States */
-  a {
+/* Links and Hover States */
+a {
     color: #f8f8f2; /* Foreground (Text) */
     background-color: #44475a; /* Background */
     border-color: #6272a4; /* Border */
     transition: background-color 0.3s ease;
-  }
+    }
 
-  a:hover {
+a:hover {
     background-color: #bd93f9; /* Purple on Hover */
     border-color: #ff79c6; /* Pink (Border on Hover) */
-  }
+    }
 
-  /* Text Colors */
-  .text-white {
+/* Text Colors */
+.text-white {
     color: #f8f8f2; /* Foreground (Text) */
-  }
+    }
 
-  /* Background Colors */
-  .bg-neutral-900 {
+/* Background Colors */
+.bg-neutral-900 {
     background-color: #282a36; /* Background */
-  }
+    }
 
-  .hover\:bg-neutral-800:hover {
+.hover\:bg-neutral-800:hover {
     background-color: #44475a; /* Current Line (Hover) */
-  }
+    }
 
-  /* Border Color */
-  .border-neutral-600 {
+/* Border Color */
+.border-neutral-600 {
     border-color: #6272a4; /* Border */
-  }
+    }
 
-  /* Rounded Corners */
-  .rounded-lg {
+/* Rounded Corners */
+.rounded-lg {
     border-radius: 0.5rem;
-  }
+    }
+
+/* Ensure both graphs have a consistent layout */
+.graphs-container {
+    display: flex;
+    justify-content: center; /* Center the NetworkGraph */
+    align-items: flex-start; /* Align at the top */
+    gap: 20px; /* Space between NetworkGraph and BlockGraph */
+    margin-top: 40px; /* Some space from the top */
+    }
+
+.network-graph {
+    width: 70vw; /* Adjust the size of NetworkGraph */
+    height: 500px; /* Set a fixed height for NetworkGraph */
+    border-radius: 8px;
+    overflow: hidden; /* Prevent overflow */
+    background-color: #44475a; /* Background color for NetworkGraph */
+    }
+
+.block-graph {
+    width: 30vw; /* Adjust the size of BlockGraph */
+    height: 500px; /* Set a fixed height for BlockGraph */
+    border-radius: 8px;
+    background-color: #44475a; /* Background color for BlockGraph */
+    }
+
 </style>
+
 <BasicLayout
-    title="Jordan Pryor - Current Projects"
-    description="A network graph showing current projects"
-    page="projects"
+title="Jordan Pryor - Current Projects"
+description="A network graph showing current projects"
+page="projects"
 >
-  <a
-      href="/"
-      class="text-white absolute bg-neutral-900 hover:bg-neutral-800 top-4 left-4 px-4 py-2 border-1 border-solid border-neutral-600 rounded-lg"
-  >Back</a
-  >
+<a
+href="/"
+class="text-white absolute bg-neutral-900 hover:bg-neutral-800 top-4 left-4 px-4 py-2 border-1 border-solid border-neutral-600 rounded-lg"
+>Back</a>
 
-  <NetworkGraph client:load />
-
-  <BlockGraph client:load /> <!-- Add BlockGraph component here -->
+<div class="graphs-container">
+<div class="network-graph">
+<NetworkGraph client:load />
+</div>
+<div class="block-graph">
+<BlockGraph client:load />
+</div>
+</div>
 </BasicLayout>
