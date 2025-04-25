@@ -20,7 +20,7 @@ const hexToPixel = (q: number, r: number) => {
 
 const githubUsername = "jordan-pryor"; // GitHub username for fetching repo data
 
-const SpiderWebGraph = () => {
+const NetworkGraph = () => {
     let graphContainer: HTMLDivElement | undefined;
 
     onMount(() => {
