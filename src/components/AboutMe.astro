@@ -4,21 +4,22 @@ import Card from "./Card/index.astro";
 ---
 <style>
   .about-me-card {
+    width: 343px;
+    height: 584px;
     background-color: #0d0d0d;
     border: 1px solid #b276f4;
     border-radius: 0.75rem;
     font-family: 'IBM Plex Mono', monospace;
     color: #d9d9d9;
-    padding: 0.75rem; /* slightly reduced padding */
+    padding: 0.75rem;
     box-shadow: 0 0 18px rgba(178, 118, 244, 0.15);
-    overflow: hidden;
     box-sizing: border-box;
-    height: 100%;
+    overflow-y: auto;
   }
 
   .about-me-text {
-    font-size: 0.875rem;
-    line-height: 1.6;
+    font-size: 0.8rem;
+    line-height: 1.45;
     color: #f0f0f0;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -29,16 +30,16 @@ import Card from "./Card/index.astro";
   .about-me-list {
     color: #aaaaaa;
     list-style: square;
-    padding-left: 1.25rem;
-    margin: 0.5rem 0;
-  }
-
-  .about-me-list li {
+    padding-left: 1rem;
     margin: 0.25rem 0;
   }
 
+  .about-me-list li {
+    margin: 0.15rem 0;
+  }
+
   .paragraph {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
   }
 
   .bold-text {
@@ -54,7 +55,12 @@ import Card from "./Card/index.astro";
   }
 </style>
 
-<Card colSpan="md:col-span-1" rowSpan="md:row-span-6" title="About me" class="about-me-card">
+<Card
+    title="About me"
+    colSpan="md:col-span-1"
+    rowSpan="md:row-span-6"
+    class="about-me-card"
+>
   <div class="about-me-text">
     <p>
       Hey, I’m Jordan — a full-time dev and student at Full Sail University.
@@ -68,8 +74,8 @@ import Card from "./Card/index.astro";
       <li>Java</li>
       <li>Lua</li>
       <li>C++</li>
-      <li>Swift(Basic)</li>
-      <li>C#(Unity)</li>
+      <li>Swift (basic)</li>
+      <li>C# (Unity)</li>
       <li>Unreal Visual Scripting</li>
       <li>GDScript</li>
     </ul>
