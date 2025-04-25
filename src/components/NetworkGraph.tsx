@@ -11,10 +11,7 @@ const colors = {
 };
 
 // Function to calculate tile size based on repo name length
-const baseTileWidth = 100; // Base width for a repo name length of 1
 const baseTileHeight = 100; // Fixed height for all tiles
-const tilePadding = 10; // Padding between tiles
-const tileMargin = 20; // Margin for spacing between tiles
 
 const githubUsername = "jordan-pryor"; // GitHub username for fetching repo data
 
@@ -63,9 +60,9 @@ const NetworkGraph = () => {
                     .data(nodes)
                     .enter()
                     .append("rect")
-                    .attr("x", (d) => d.col * (baseTileWidth + tileMargin)) // Column position with margin
-                    .attr("y", (d) => d.row * (baseTileHeight + tileMargin)) // Row position with margin
-                    .attr("width", (d) => baseTileWidth + d.nameLength * 6) // Tile width based on name length
+                    .attr("x", (d) => d.col * (baseTileHeight + 20)) // Column position with spacing
+                    .attr("y", (d) => d.row * (baseTileHeight + 20)) // Row position with spacing
+                    .attr("width", (d) => 120 + d.nameLength * 6) // Tile width based on name length
                     .attr("height", baseTileHeight) // Fixed height
                     .attr("fill", (d) => getColorForActivity(d.stars))
                     .attr("stroke", "#fff")
@@ -88,8 +85,8 @@ const NetworkGraph = () => {
                     .enter()
                     .append("text")
                     .attr("class", "repo-label")
-                    .attr("x", (d) => d.col * (baseTileWidth + tileMargin) + (baseTileWidth + d.nameLength * 6) / 2)
-                    .attr("y", (d) => d.row * (baseTileHeight + tileMargin) + baseTileHeight / 2)
+                    .attr("x", (d) => d.col * (baseTileHeight + 20) + (120 + d.nameLength * 6) / 2) // Centered text
+                    .attr("y", (d) => d.row * (baseTileHeight + 20) + baseTileHeight / 2)
                     .attr("text-anchor", "middle")
                     .attr("font-size", "12px")
                     .attr("fill", "#fff")

@@ -68,9 +68,11 @@ a:hover {
     justify-content: center; /* Center the NetworkGraph */
     align-items: flex-start; /* Align at the top */
     gap: 20px; /* Space between NetworkGraph and BlockGraph */
-    margin-top: 40px; /* Some space from the top */
+    margin-top: 80px; /* Added space from the top to avoid overlap with back button */
+    width: 100%;
     }
 
+/* NetworkGraph styling */
 .network-graph {
     width: 70vw; /* Adjust the size of NetworkGraph */
     height: 500px; /* Set a fixed height for NetworkGraph */
@@ -79,13 +81,13 @@ a:hover {
     background-color: #44475a; /* Background color for NetworkGraph */
     }
 
+/* BlockGraph styling */
 .block-graph {
     width: 30vw; /* Adjust the size of BlockGraph */
     height: 500px; /* Set a fixed height for BlockGraph */
     border-radius: 8px;
     background-color: #44475a; /* Background color for BlockGraph */
     }
-
 </style>
 
 <BasicLayout
@@ -93,15 +95,21 @@ title="Jordan Pryor - Current Projects"
 description="A network graph showing current projects"
 page="projects"
 >
+<!-- Back Button -->
 <a
 href="/"
 class="text-white absolute bg-neutral-900 hover:bg-neutral-800 top-4 left-4 px-4 py-2 border-1 border-solid border-neutral-600 rounded-lg"
->Back</a>
+>
+Back
+</a>
 
+<!-- Container for both graphs -->
 <div class="graphs-container">
+<!-- NetworkGraph component -->
 <div class="network-graph">
 <NetworkGraph client:load />
 </div>
+<!-- BlockGraph component -->
 <div class="block-graph">
 <BlockGraph client:load />
 </div>
