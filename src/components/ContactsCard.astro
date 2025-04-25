@@ -3,73 +3,70 @@ import Card from "./Card/index.astro";
 import { LINKS } from "../lib/constants";
 ---
 <style>
-  .contact-header {
-    color: #bd93f9; /* Soft purple */
-  }
-
-  .contact-details,
-  .socials-title {
-    color: #aaffcc; /* Green to match terminal accent */
-  }
-
-  .contact-info,
-  .social-links a {
-    color: #f8f8f2; /* Light text for readability */
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-
-  .social-links a {
-    transition: color 0.2s ease;
-  }
-
-  .social-links a:hover {
-    color: #ff79c6; /* Terminal pink hover */
-  }
-
   .contact-card {
-    background-color: #1e1f29; /* Terminal dark background */
-    border: 1px solid #44475a; /* Subtle border like a terminal frame */
+    background-color: #0f0f1b; /* Match rest of UI cards */
+    border: 1px solid #a259ff; /* Consistent purple border */
     padding: 1rem;
-    font-family: 'Fira Code', monospace; /* Terminal font */
+    border-radius: 0.5rem;
+    font-family: 'Fira Code', monospace;
+    color: #e5e5e5;
   }
 
-  .terminal-divider {
-    border-top: 1px solid #44475a;
+  .card-header {
+    color: #bd5eff; /* Header pink/purple */
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .label {
+    color: #50fa7b; /* Contact detail label green */
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .info {
+    color: #e5e5e5; /* Body text */
+    font-size: 0.875rem;
+  }
+
+  .social-link {
+    color: #e5e5e5;
+    text-decoration: none;
+  }
+
+  .social-link:hover {
+    color: #bd5eff;
+  }
+
+  .divider {
+    border-top: 1px solid #2e2e3a;
     margin: 0.75rem 0;
-  }
-
-  .social-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
   }
 </style>
 
 <Card colSpan="md:col-span-1" rowSpan="md:row-span-4">
   <div class="h-full flex flex-col contact-card">
     <header class="flex items-center">
-      <h1 class="contact-header text-lg font-bold tracking-tight">
-        &gt; Let's start working together<span class="blinking-cursor">_</span>
-      </h1>
+      <h1 class="card-header">&gt; Let's start working together<span class="blinking-cursor">_</span></h1>
     </header>
 
-    <div class="terminal-divider" />
+    <div class="divider" />
 
     <address class="flex flex-col gap-1 not-italic">
-      <h2 class="contact-details text-sm uppercase tracking-wide">Contact Details</h2>
-      <p class="contact-info text-sm">jordanpryor.personal@outlook.com</p>
-      <p class="contact-info text-sm">Nashville, TN</p>
+      <p class="label">Contact Details</p>
+      <p class="info">jordanpryor.personal@outlook.com</p>
+      <p class="info">Nashville, TN</p>
     </address>
 
-    <div class="terminal-divider" />
+    <div class="divider" />
 
     <div class="flex flex-col w-fit">
-      <h2 class="socials-title text-sm uppercase tracking-wide mb-1">Socials</h2>
-      <ul class="social-links text-sm">
-        <li><a href={LINKS.linkedin} target="_blank" aria-label="LinkedIn Profile">LinkedIn</a></li>
-        <li><a href={LINKS.github} target="_blank" aria-label="GitHub Profile">GitHub</a></li>
-        <li><a href={LINKS.discord} target="_blank" aria-label="Discord">Discord</a></li>
+      <p class="label">Socials</p>
+      <ul class="flex flex-col gap-1">
+        <li><a class="social-link" href={LINKS.linkedin} target="_blank">LinkedIn</a></li>
+        <li><a class="social-link" href={LINKS.github} target="_blank">GitHub</a></li>
+        <li><a class="social-link" href={LINKS.discord} target="_blank">Discord</a></li>
       </ul>
     </div>
   </div>
