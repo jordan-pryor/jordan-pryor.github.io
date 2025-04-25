@@ -58,7 +58,7 @@ import { Image } from "astro:assets";
   .intro-layout {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     flex-wrap: wrap;
     gap: 1rem;
   }
@@ -76,19 +76,19 @@ import { Image } from "astro:assets";
   .intro-logo-wrapper {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex: 0 0 140px;
+    align-items: flex-end;
+    flex: 0 0 auto;
     padding-left: 1rem;
   }
 
   .logo-image {
-    max-width: 140px;
+    width: 160px;
     height: auto;
     object-fit: contain;
     pointer-events: none;
     user-select: none;
     opacity: 0.9;
-    filter: drop-shadow(0 0 10px rgba(178, 118, 244, 0.5));
+    filter: drop-shadow(0 0 12px rgba(178, 118, 244, 0.5));
   }
 
   .button-group {
@@ -124,8 +124,8 @@ import { Image } from "astro:assets";
       <Image
           src="/logo.png"
           alt="Jordan Pryor logo"
-          width="140"
-          height="120"
+          width="160"
+          height="160"
           class="logo-image"
       />
     </div>
