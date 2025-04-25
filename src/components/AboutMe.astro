@@ -4,17 +4,19 @@ import Card from "./Card/index.astro";
 ---
 <style>
   .about-me-card {
-    background-color: #0d0d0d; /* Jet black terminal bg */
-    border: 1px solid #b276f4; /* Subtle purple border */
+    background-color: #0d0d0d;
+    border: 1px solid #b276f4;
     border-radius: 0.75rem;
     font-family: 'IBM Plex Mono', monospace;
     color: #d9d9d9;
     padding: 1rem;
     box-shadow: 0 0 18px rgba(178, 118, 244, 0.15);
+    overflow: hidden;
+    max-height: 100%;
   }
 
   .about-me-title {
-    color: #ff4eb8; /* Bright pink accent title */
+    color: #ff4eb8;
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
@@ -23,11 +25,14 @@ import Card from "./Card/index.astro";
   .about-me-text {
     font-size: 0.875rem;
     line-height: 1.6;
-    color: #f0f0f0; /* Light gray text */
+    color: #f0f0f0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
   }
 
   .about-me-list {
-    color: #aaaaaa; /* Desaturated gray */
+    color: #aaaaaa;
     list-style: square;
     padding-left: 1.25rem;
     margin: 0.5rem 0;
