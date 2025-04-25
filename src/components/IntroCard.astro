@@ -17,13 +17,18 @@ import { Image } from "astro:assets";
     color: #f0f0f0;
     box-shadow: 0 0 18px rgba(178, 118, 244, 0.12);
   }
-
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #c792ea; /* Match this to your other titles if different */
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 0.5rem;
+  }
   .welcome-text {
     color: #b276f4; /* Soft violet */
     font-size: 0.75rem;
     margin-bottom: 0.25rem;
   }
-
   .intro-text {
     color: #f0f0f0;
     font-size: 1.125rem;
@@ -51,10 +56,16 @@ import { Image } from "astro:assets";
     display: block;
     margin-bottom: 0.5rem;
   }
+  .blinking-cursor {
+    display: inline-block;
+    width: 0.75ch;
+    color: #aaffcc;
+    animation: blink 1s step-start infinite;
+  }
 </style>
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" class="terminal-card">
-  <span class="terminal-header">&gt; welcome.sh</span>
+  <h2 class="card-title">&gt; Intro<span class="blinking-cursor">_</span></h2>
   <div class="flex w-full h-full">
     <div class="flex flex-col justify-between md:max-h-[300px] gap-4">
       <div class="flex flex-col h-full">
