@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7285d3c-4927-4093-81af-930771d3c6c2" name="Changes" comment="" />
+    <list default="true" id="e7285d3c-4927-4093-81af-930771d3c6c2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/components/Now.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Now.astro" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +61,7 @@
       <workItem from="1745309367257" duration="474000" />
       <workItem from="1745310456934" duration="2849000" />
       <workItem from="1745380344104" duration="31000" />
-      <workItem from="1745536810965" duration="16611000" />
+      <workItem from="1745536810965" duration="16882000" />
     </task>
     <servers />
   </component>
