@@ -9,30 +9,33 @@ import { Image } from "astro:assets";
 
 <style>
   .terminal-card {
-    background-color: #0d0d0d; /* Jet black terminal background */
-    border: 1px solid #b276f4; /* Neon violet border */
+    background-color: #0d0d0d;
+    border: 1px solid #b276f4;
     border-radius: 0.75rem;
-    padding: 1.25rem;
+    padding: 1rem;
     font-family: 'IBM Plex Mono', monospace;
     color: #f0f0f0;
     box-shadow: 0 0 18px rgba(178, 118, 244, 0.12);
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
   .welcome-text {
-    color: #b276f4; /* Soft violet */
+    color: #b276f4;
     font-size: 0.75rem;
-    margin-bottom: 0.25rem;
+    margin: 0 0 0.25rem 0;
   }
 
   .intro-text {
     color: #f0f0f0;
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.6;
     font-weight: 300;
+    margin: 0;
   }
 
   .bold-text {
-    color: #ff4eb8; /* Bright pink highlight */
+    color: #ff4eb8;
     font-weight: 600;
   }
 
@@ -42,55 +45,75 @@ import { Image } from "astro:assets";
   }
 
   .button:hover .button-icon {
-    color: #ff4eb8; /* Neon pink on hover */
+    color: #ff4eb8;
   }
 
   .terminal-header {
     color: #b276f4;
     font-size: 0.75rem;
-    display: block;
     margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .intro-layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .intro-content {
+    flex: 1;
+    min-width: 240px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .logo-image {
+    max-height: 120px;
+    width: auto;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.85;
+    align-self: center;
   }
 </style>
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" class="terminal-card">
   <span class="terminal-header">&gt; welcome.sh</span>
-  <div class="flex w-full h-full">
-    <div class="flex flex-col justify-between md:max-h-[300px] gap-4">
-      <div class="flex flex-col h-full">
-        <h6 class="welcome-text m-0">welcome</h6>
-        <p class="intro-text m-0">
+  <div class="intro-layout">
+    <div class="intro-content">
+      <div>
+        <h6 class="welcome-text">welcome</h6>
+        <p class="intro-text">
           Hello👋, I'm <b class="bold-text">Jordan N. Pryor</b>, a Developer with expertise in game development, game engine creation, and software design. I specialize in crafting innovative solutions that deliver engaging and immersive experiences.
         </p>
       </div>
       <div class="flex gap-4">
-        <a href={LINKS.github} aria-label="github profile" target="_blank">
-          <Button aria-label="github profile">
-            <Icon name="ri:github-fill" class="h-6 button-icon" />
-            <span class="sr-only">GitHub Profile</span>
-          </Button>
+        <a href={LINKS.github} aria-label="GitHub Profile" target="_blank">
+          <Button><Icon name="ri:github-fill" class="h-6 button-icon" /><span class="sr-only">GitHub</span></Button>
         </a>
-        <a href={LINKS.linkedin} aria-label="linkedin profile" target="_blank">
-          <Button aria-label="linkedin profile">
-            <Icon name="ri:linkedin-box-fill" class="h-6 button-icon" />
-            <span class="sr-only">Linkedin Profile</span>
-          </Button>
+        <a href={LINKS.linkedin} aria-label="LinkedIn Profile" target="_blank">
+          <Button><Icon name="ri:linkedin-box-fill" class="h-6 button-icon" /><span class="sr-only">LinkedIn</span></Button>
         </a>
         <Tooltip client:visible>
-          <Button aria-label="easter egg btn">
-            <Icon name="ri:emotion-laugh-line" class="h-6 button-icon" />
-            <span class="sr-only">Easter egg button</span>
-          </Button>
+          <Button aria-label="Easter Egg"><Icon name="ri:emotion-laugh-line" class="h-6 button-icon" /><span class="sr-only">Easter Egg</span></Button>
         </Tooltip>
       </div>
     </div>
 
     <Image
-        width="300"
-        height="300"
-        src="/me.webp"
-        class="w-auto max-h-[300px] select-none absolute right-[-110px] bottom-[-20px] z-[-1] opacity-50 md:opacity-100 md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none"
-        alt="memoji of jordan"
+        src="/logo.png"
+        alt="Jordan Pryor logo"
+        width="150"
+        height="120"
+        class="logo-image"
     />
   </div>
 </Card>
