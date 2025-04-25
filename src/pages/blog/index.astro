@@ -4,9 +4,9 @@ import Layout from "../../layouts/Layout.astro";
 import PostRow from "../../components/Blog/PostRow.astro";
 
 const posts = (await getCollection("blog"))?.sort(
-    (blogEntryA, blogEntryB) =>
-        (blogEntryB.data.pubDate || new Date()).getTime() -
-        (blogEntryA.data.pubDate || new Date()).getTime()
+    (a, b) =>
+        (b.data.pubDate || new Date()).getTime() -
+        (a.data.pubDate || new Date()).getTime()
 );
 ---
 
@@ -15,129 +15,115 @@ const posts = (await getCollection("blog"))?.sort(
   import { loaderAnimation } from "../../lib/constants";
 
   const sequence = [loaderAnimation];
-
   timeline(sequence as TimelineDefinition);
 </script>
 
 <style>
-  /* General Background and Text Colors */
-  body {
-    background-color: #282a36; /* Background */
-    color: #f8f8f2; /* Foreground */
-  }
+/* Terminal + Abernathy Theme */
 
-  /* Links and Hover States */
-  a {
-    color: #f8f8f2; /* Foreground (Text) */
-    background-color: #44475a; /* Current Line (Background) */
-    border-color: #6272a4; /* Comment (Border) */
-    transition: background-color 0.3s ease;
-  }
+body {
+    background-color: #111416; /* background */
+    color: #eeeeec; /* foreground */
+    }
 
-  a:hover {
-    background-color: #bd93f9; /* Purple on Hover */
-    border-color: #8be9fd; /* Cyan (Border on Hover) */
-  }
+a {
+    color: #eeeeec;
+    background-color: #404040; /* brightBlack */
+    border-color: #00cdcd; /* cyan */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
 
-  /* Text Colors */
-  .text-white {
-    color: #f8f8f2; /* Foreground (Text) */
-  }
+a:hover {
+    background-color: #11b5f6; /* brightBlue */
+    border-color: #00ffff; /* brightCyan */
+    }
 
-  .text-neutral-100 {
-    color: #f8f8f2; /* Foreground (Text) */
-  }
+.text-white,
+.text-neutral-100 {
+    color: #eeeeec; /* foreground */
+    }
 
-  /* Background Colors */
-  .bg-neutral-900 {
-    background-color: #282a36; /* Background */
-  }
+.bg-neutral-900 {
+    background-color: #111416;
+    }
 
-  .hover\:bg-neutral-800:hover {
-    background-color: #44475a; /* Current Line (Hover) */
-  }
+.hover\:bg-neutral-800:hover {
+    background-color: #404040; /* brightBlack */
+    }
 
-  /* Border Color */
-  .border-neutral-600 {
-    border-color: #6272a4; /* Comment (Border) */
-  }
+.border-neutral-600 {
+    border-color: #00cdcd; /* cyan */
+    }
 
-  /* Rounded Corners */
-  .rounded-lg {
+.rounded-lg {
     border-radius: 0.5rem;
-  }
+    }
 
-  /* Font Size and Weight */
-  .text-4xl {
+.text-4xl {
     font-size: 2.25rem;
     line-height: 2.5rem;
-  }
+    }
 
-  .font-bold {
+.font-bold {
     font-weight: 700;
-  }
+    }
 
-  /* Margin and Padding */
-  .mb-4 {
+.mb-4 {
     margin-bottom: 1rem;
-  }
+    }
 
-  .mb-8 {
+.mb-8 {
     margin-bottom: 2rem;
-  }
+    }
 
-  .p-8 {
+.p-8 {
     padding: 2rem;
-  }
+    }
 
-  /* Width and Height */
-  .w-screen {
+.w-screen {
     width: 100vw;
-  }
+    }
 
-  .h-screen {
+.h-screen {
     height: 100vh;
-  }
+    }
 
-  .max-w-3xl {
+.max-w-3xl {
     max-width: 48rem;
-  }
+    }
 
-  .w-full {
+.w-full {
     width: 100%;
-  }
+    }
 
-  /* Centering */
-  .mx-auto {
+.mx-auto {
     margin-left: auto;
     margin-right: auto;
-  }
+    }
 </style>
 
-
 <Layout
-    title="Jordan Pryor - Blog"
-    description="Indie developer with a passion for Video Games"
+title="Jordan Pryor - Blog"
+description="Indie developer with a passion for Video Games"
 >
-  <main
-      class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8"
-  >
-    <a
-        href="/"
-        class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
-    >Back</a
-    >
-    <h1 class="text-4xl font-bold mb-4 text-neutral-100">Posts</h1>
-    <ul class="w-full">
-      {
-        posts?.map((post) => (
-            <PostRow
-                title={post.data.title || "No title"}
-                date={post.data.pubDate || new Date()}
-                url={post.slug}
-            />
-        ))
-      }
-    </ul>
-  </main>
+<main class="w-screen h-screen flex flex-col justify-start items-start max-w-3xl mx-auto p-8">
+<a
+href="/"
+class="text-white bg-neutral-900 hover:bg-neutral-800 px-4 py-2 mb-8 border-1 border-solid border-neutral-600 rounded-lg"
+>
+Back
+</a>
+<h1 class="text-4xl font-bold mb-4 text-neutral-100">Posts</h1>
+<ul class="w-full">
+{
+    posts?.map((post) => (
+        <PostRow
+    title={post.data.title || "No title"}
+    date={post.data.pubDate || new Date()}
+    url={post.slug}
+    />
+    ))
+    }
+</ul>
+</main>
 </Layout>
