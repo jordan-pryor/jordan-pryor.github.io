@@ -57,7 +57,6 @@ import { Image } from "astro:assets";
 
   .intro-layout {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
@@ -74,32 +73,45 @@ import { Image } from "astro:assets";
     gap: 1rem;
   }
 
+  .intro-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 140px;
+    padding-left: 1rem;
+  }
+
   .logo-image {
-    max-height: 120px;
-    width: auto;
+    max-width: 140px;
+    height: auto;
     object-fit: contain;
     pointer-events: none;
     user-select: none;
-    opacity: 0.85;
-    align-self: center;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 10px rgba(178, 118, 244, 0.5));
+  }
+
+  .button-group {
+    display: flex;
+    gap: 1rem;
   }
 </style>
 
 <Card colSpan="md:col-span-3" rowSpan="md:row-span-4" class="terminal-card">
-  <span class="terminal-header">&gt; welcome.sh</span>
+  <span class="terminal-header">&gt; Welcome.sh</span>
   <div class="intro-layout">
     <div class="intro-content">
       <div>
         <h6 class="welcome-text">welcome</h6>
         <p class="intro-text">
-          Hello👋, I'm <b class="bold-text">Jordan N. Pryor</b>, a Developer with expertise in game development, game engine creation, and software design. I specialize in crafting innovative solutions that deliver engaging and immersive experiences.
+          Hello 👋, I'm <b class="bold-text">Jordan N. Pryor</b>, a Developer with expertise in game development, game engine creation, and software design. I specialize in crafting innovative solutions that deliver engaging and immersive experiences.
         </p>
       </div>
-      <div class="flex gap-4">
-        <a href={LINKS.github} aria-label="GitHub Profile" target="_blank">
+      <div class="button-group">
+        <a href={LINKS.github} aria-label="GitHub" target="_blank">
           <Button><Icon name="ri:github-fill" class="h-6 button-icon" /><span class="sr-only">GitHub</span></Button>
         </a>
-        <a href={LINKS.linkedin} aria-label="LinkedIn Profile" target="_blank">
+        <a href={LINKS.linkedin} aria-label="LinkedIn" target="_blank">
           <Button><Icon name="ri:linkedin-box-fill" class="h-6 button-icon" /><span class="sr-only">LinkedIn</span></Button>
         </a>
         <Tooltip client:visible>
@@ -108,12 +120,14 @@ import { Image } from "astro:assets";
       </div>
     </div>
 
-    <Image
-        src="/logo.png"
-        alt="Jordan Pryor logo"
-        width="150"
-        height="120"
-        class="logo-image"
-    />
+    <div class="intro-logo-wrapper">
+      <Image
+          src="/logo.png"
+          alt="Jordan Pryor logo"
+          width="140"
+          height="120"
+          class="logo-image"
+      />
+    </div>
   </div>
 </Card>
