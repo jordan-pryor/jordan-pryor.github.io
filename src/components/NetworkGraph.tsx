@@ -39,22 +39,32 @@ const NetworkGraph = () => {
         fetch(`https://api.github.com/users/${githubUsername}/repos`)
             .then(res => res.json())
             .then(repos => {
+                // Function to check if a repo has activity
+                const isRecentlyActive = (updatedAt: string) => {
+                    const lastUpdated = new Date(updatedAt);
+                    const oneMonthAgo = new Date();
+                    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+                    return lastUpdated > oneMonthAgo;
+                };
+
                 // Nodes representing each repository
                 const nodes = repos.map((repo: any, i: number) => ({
                     id: repo.name,
                     stars: repo.stargazers_count,
+                    updatedAt: repo.updated_at, // Store the last updated date
                     url: repo.html_url,
                     q: i % 10 - 5,  // Positioning on the x-axis
                     r: Math.floor(i / 10) - 5, // Positioning on the y-axis
                 }));
 
-                // Function to determine the color based on the repo activity (stars)
-                const getColorForActivity = (stars: number) => {
+                // Function to determine the color based on the repo activity (stars and last activity date)
+                const getColorForActivity = (stars: number, updatedAt: string) => {
                     if (stars > 50) return colors.veryHighActivity;
                     if (stars > 30) return colors.highActivity;
                     if (stars > 10) return colors.mediumActivity;
                     if (stars > 0) return colors.lowActivity;
-                    return colors.noActivity;
+                    if (!isRecentlyActive(updatedAt)) return colors.noActivity;
+                    return colors.lowActivity; // Default to low activity color if no stars and recently active
                 };
 
                 // Create a link between nodes
@@ -86,24 +96,25 @@ const NetworkGraph = () => {
                         const [x, y] = hexToPixel(d.q, d.r);
                         return `translate(${x + width / 2}, ${y + height / 2})`;
                     })
-                    .attr("fill", (d) => getColorForActivity(d.stars))
+                    .attr("fill", (d) => getColorForActivity(d.stars, d.updatedAt))
                     .attr("stroke", "#fff")
                     .attr("stroke-width", 1.5)
                     .on("mouseover", function () {
                         d3.select(this).attr("fill", "#f5bde6"); // Highlight color on hover
                     })
                     .on("mouseout", function (event, d) {
-                        d3.select(this).attr("fill", getColorForActivity(d.stars));
+                        d3.select(this).attr("fill", getColorForActivity(d.stars, d.updatedAt));
                     })
                     .on("click", (event, d) => {
                         window.open(d.url, "_blank");
                     });
 
                 // Add labels (repo names) above the hexagons
-                svg.selectAll("text")
+                const labels = svg.selectAll("text")
                     .data(nodes)
                     .enter()
                     .append("text")
+                    .attr("class", "repo-label") // Add class for easy selection
                     .attr("transform", (d) => {
                         const [x, y] = hexToPixel(d.q, d.r);
                         return `translate(${x + width / 2}, ${y + height / 2 - 40})`; // Adjust position above the hexagon
@@ -130,6 +141,13 @@ const NetworkGraph = () => {
                             return `translate(${d.x}, ${d.y})`;
                         });
 
+                    // Update label position as the hexagon moves
+                    labels
+                        .attr("transform", (d) => {
+                            const [x, y] = hexToPixel(d.q, d.r);
+                            return `translate(${d.x}, ${d.y - 40})`; // Keep the label 40px above the hexagon
+                        });
+
                     link
                         .attr("x1", (d: any) => d.source.x)
                         .attr("y1", (d: any) => d.source.y)
@@ -143,4 +161,5 @@ const NetworkGraph = () => {
 
     return <div ref={graphContainer} style={{ width: "100%", height: "auto" }}></div>;
 };
+
 export default NetworkGraph;
