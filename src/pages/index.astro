@@ -41,79 +41,80 @@ const latestPost = posts[0] || { data: { title: "No posts available" } };
 
 <style>
 body {
-    background-color: #000000; /* Changed to pure black */
-    color: #000000;
+    background-color: #111416; /* Abernathy theme background */
+    color: #eeeeec; /* Abernathy theme text color */
     font-family: 'IBM Plex Mono', monospace;
     }
 
 .card {
-    background-color: #000000;
-    color: #c9d1d9;
-    border: 1px solid #7dcfff;
+    background-color: #111416; /* Same background as body */
+    color: #eeeeec; /* Abernathy theme text color */
+    border: 1px solid #cd00cd; /* Abernathy theme purple border */
     border-radius: 1rem;
-    box-shadow: 0 0 20px rgba(125, 207, 255, 0.25), inset 0 0 10px rgba(125, 207, 255, 0.1);
+    box-shadow: 0 0 20px rgba(205, 0, 205, 0.25), inset 0 0 10px rgba(205, 0, 205, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
 .card:hover {
     transform: scale(1.015);
-    box-shadow: 0 0 30px rgba(125, 207, 255, 0.4), inset 0 0 15px rgba(125, 207, 255, 0.2);
+    box-shadow: 0 0 30px rgba(205, 0, 205, 0.4), inset 0 0 15px rgba(205, 0, 205, 0.2);
     }
 
 .card-title::before {
     content: "$ ";
-    color: #7dcfff;
+    color: #cd00cd; /* Abernathy theme purple */
     }
 
 .blog-card-title {
     font-size: 1.25rem;
     font-weight: bold;
-    color: #ff7edb;
+    color: #cd00cd; /* Abernathy theme purple */
     transition: color 0.3s ease;
     }
 
 .blog-card-title:hover {
-    color: #f472b6;
+    color: #ff00ff; /* Abernathy bright purple */
     }
 
 a {
-    color: #7dcfff;
+    color: #cd00cd; /* Abernathy theme purple */
     transition: color 0.3s ease;
     text-decoration: none;
     font-weight: 500;
     }
 
 a:hover {
-    color: #58a6ff;
+    color: #00ffff; /* Abernathy bright cyan */
     text-decoration: underline;
     }
 
 .network-graph-container {
     animation: pulseBorder 2s infinite;
     border-radius: 1rem;
-    border: 1px solid #58a6ff;
+    border: 1px solid #00ffff; /* Abernathy bright cyan */
     background-color: rgba(24, 28, 40, 0.5);
     }
 
 @keyframes pulseBorder {
     0% {
-        box-shadow: 0 0 6px rgba(125, 207, 255, 0.3);
+        box-shadow: 0 0 6px rgba(0, 205, 205, 0.3); /* Abernathy bright cyan */
     }
     50% {
-        box-shadow: 0 0 12px rgba(125, 207, 255, 0.6);
+        box-shadow: 0 0 12px rgba(0, 205, 205, 0.6); /* Abernathy bright cyan */
     }
     100% {
-        box-shadow: 0 0 6px rgba(125, 207, 255, 0.3);
+        box-shadow: 0 0 6px rgba(0, 205, 205, 0.3); /* Abernathy bright cyan */
     }
     }
 
 p.text-xs {
-    color: #7dcfff;
+    color: #cd00cd; /* Abernathy theme purple */
     }
 
 h2 {
-    color: #7dcfff;
+    color: #cd00cd; /* Abernathy theme purple */
     }
+
 .transition-container {
     position: absolute;
     top: 0;
@@ -129,7 +130,7 @@ h2 {
 
 .terminal-animation {
     font-family: 'Courier New', monospace;
-    color: #7dcfff;
+    color: #00ffff; /* Abernathy bright cyan */
     text-align: center;
     animation: terminalEffect 3s infinite step-start;
     }
